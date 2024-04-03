@@ -1,9 +1,7 @@
 package app.persistence;
 
-import app.entities.User;
 import app.exceptions.DatabaseException;
 import io.javalin.Javalin;
-import app.persistence.ConnectionPool;
 import io.javalin.http.Context;
 
 public class UserController
