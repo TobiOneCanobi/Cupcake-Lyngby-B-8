@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>loginpage</title>
+    <link rel="stylesheet" href="../public/css/style.css" th:href="@{css/style.css}"/>
+
+    <a href="loginpage.html" th:href="@{/}">
+        <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcake.png}" width="35%"/>
+    </a>
+</head>
+<body>
+
+
+<h1>Velkommen</h1>
+<h3>Vær venling at logge ind</h3>
+
+<form action="/homepage.html">
+    <label for="fname">Email:</label><br>
+    <input type="text" id="fname" name="fname" placeholder="email"><br>
+    <label for="lname">Password:</label><br>
+    <input type="password" id="lname" name="lname" placeholder="password"><br><br>
+    <input type="submit" value="Login">
+    <br><br>
+    <h3>Eller opret en bruger her</h3>
+
+    <input type="submit" value="Opret bruger">
+</form>
+
+
+
+
+
+
+
+
+</body>
+</html>
