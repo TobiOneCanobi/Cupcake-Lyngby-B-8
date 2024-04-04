@@ -13,7 +13,9 @@
 
 
 <br><br>
-<input type="submit" value="Tilbage">
+<form th:href="@{/loginpage.html}" method="get">
+    <button formaction="return" type="submit">tilbage til login</button>
+</form>
 <br><br>
 <form method="post" >
     <input type="text" name="email" placeholder="indtast email"/>

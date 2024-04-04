@@ -21,14 +21,22 @@
     <label for="email">Password:</label><br>
     <input type="password" id="password" name="password" placeholder="password"><br><br>
     <button class="loginbottom" type="submit" formaction="/login">Login</button>
+    <p class="error" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></p>
     <br><br>
     <h3>Eller opret en bruger her</h3>
 
 </form>
 
-<form th:action="@{/createuser}" method="get">
+<!--<form th:action="@{/createuser}" method="get">
     <button type="submit">Create User</button>
-</form>
+</form> -->
+<div>
+    <a th:if="${session.currentUser != null}" href="loginpage.html" th:href="@{/logout}">Logout</a>
+    <span  th:if="${session.currentUser != null}"> | </span>
+    <form th:action="@{/createuser}" method="get">
+        <button type="submit">opret bruger</button>
+    </form>
+</div>
 
 
 
