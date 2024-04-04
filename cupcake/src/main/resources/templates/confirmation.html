@@ -4,18 +4,24 @@
     <meta charset="UTF-8">
     <title>confirmation</title>
     <link rel="stylesheet" href="../public/css/style.css" th:href="@{css/style.css}"/>
-
-    <a href="homepage.html" th:href="@{/}">
-        <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}" width="35%"/>
-    </a>
+    <button class="webform" type="submit">Log af</button>
+    <div class="flex-container">
+        <div><a href="loginpage.html" th:href="@{/}">
+            <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}" width="100%"/>
+        </a>
+        </div>
+    </div>
 </head>
 <body>
 
-
+<div class="webform center-two">
+    <div class="center-text">
 <h3>Der er trukket xx kroner fra din saldo</h3>
 <h4>Tak for din bestilling og på gensyn</h4>
+        <button class="webform" type="submit">Bestil mere</button>
 
-
+</div>
+</div>
 
 
 

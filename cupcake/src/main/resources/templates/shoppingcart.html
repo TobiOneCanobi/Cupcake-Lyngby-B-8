@@ -4,15 +4,20 @@
     <meta charset="UTF-8">
     <title>shoppingcart</title>
     <link rel="stylesheet" href="../public/css/style.css" th:href="@{css/style.css}"/>
-
-    <a href="loginpage.html" th:href="@{/}">
-        <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}" width="35%"/>
-    </a>
+    <button class="webform" type="submit">Tilbage</button>
+        <div class="flex-container">
+            <div><a href="loginpage.html" th:href="@{/}">
+                <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}" width="100%"/>
+            </a>
+            </div>
+        </div>
 </head>
 <body>
 
-
-<h1>Din indkøbskurv</h1>
+<div class="webform center-two ">
+<div class="center">
+    <h1>Din indkøbskurv</h1>
+    </div>
 
 
 <table class="table">
@@ -44,10 +49,11 @@
     </tr>
 </table>
 
-<button type="submit" name="taskId" th:value="${task.taskid}" formaction="tilbage">Tilbage</button>
-<button type="submit" name="taskId" th:value="${task.taskid}" formaction="bestil">Bestil</button>
+    <div class="webform center-two">
+    <button type="submit">Bestil</button>
+    </div>
 
-
+</div>
 
 
 
