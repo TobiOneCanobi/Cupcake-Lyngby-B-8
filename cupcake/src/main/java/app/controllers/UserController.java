@@ -37,7 +37,7 @@ public class UserController
         {
             // Hvis nej, send tilbage til login side med fejl besked
             ctx.attribute("message", e.getMessage() );
-            ctx.render("index.html");
+            ctx.render("loginpage.html");
         }
 
     }

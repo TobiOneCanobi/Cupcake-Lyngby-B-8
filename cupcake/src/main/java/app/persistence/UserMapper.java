@@ -8,13 +8,13 @@ import java.sql.SQLException;
 
 public class UserMapper
 {
-    public static User login(String eMail, String password, ConnectionPool connectionPool) throws DatabaseException
+    public static User login(String email, String password, ConnectionPool connectionPool) throws DatabaseException
     {
         String sql = "select * from users where email=? and password=?";
 
         try (Connection connection = connectionPool.getConnection(); PreparedStatement ps = connection.prepareStatement(sql))
         {
-            ps.setString(1, eMail);
+            ps.setString(1, email);
             ps.setString(2, password);
 
             ResultSet rs = ps.executeQuery();
@@ -23,7 +23,7 @@ public class UserMapper
                 int userId = rs.getInt("users_id");
                 int balance = rs.getInt("balance");
                 String role = rs.getString("role");
-                return new User(userId, eMail, password, balance, role);
+                return new User(userId, email, password, balance, role);
             } else
             {
                 throw new DatabaseException("Fejl i login. Prøv igen");
@@ -34,13 +34,13 @@ public class UserMapper
         }
     }
 
-    public static void createuser(String eMail, String passWord, int balance, String role, ConnectionPool connectionPool) throws DatabaseException
+    public static void createuser(String email, String passWord, int balance, String role, ConnectionPool connectionPool) throws DatabaseException
     {
         String sql = "insert into users (email, password, balance, role) values (?,?,?,?)";
 
         try (Connection connection = connectionPool.getConnection(); PreparedStatement ps = connection.prepareStatement(sql))
         {
-            ps.setString(1, eMail);
+            ps.setString(1, email);
             ps.setString(2, passWord);
             ps.setInt(3, balance);
             ps.setString(4, role);

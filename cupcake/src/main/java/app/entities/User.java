@@ -3,15 +3,15 @@ package app.entities;
 public class User
 {
     private int userid;
-    private String eMail;
+    private String email;
     private String passWord;
     private int balance;
     private String role;
 
-    public User(int userid, String eMail, String passWord, int balance, String role)
+    public User(int userid, String email, String passWord, int balance, String role)
     {
         this.userid = userid;
-        this.eMail = eMail;
+        this.email = email;
         this.passWord = passWord;
         this.balance = balance;
         this.role = role;
@@ -27,14 +27,14 @@ public class User
         this.userid = userid;
     }
 
-    public String geteMail()
+    public String getEmail()
     {
-        return eMail;
+        return email;
     }
 
-    public void seteMail(String eMail)
+    public void setEmail(String email)
     {
-        this.eMail = eMail;
+        this.email = email;
     }
 
     public String getPassWord()
@@ -72,7 +72,7 @@ public class User
     {
         return "User{" +
                 "userid=" + userid +
-                ", eMail='" + eMail + '\'' +
+                ", email='" + email + '\'' +
                 ", passWord='" + passWord + '\'' +
                 ", balance=" + balance +
                 ", role='" + role + '\'' +
