@@ -15,16 +15,16 @@
 <h1>Velkommen</h1>
 <h3>Vær venling at logge ind</h3>
 
-<form action="/homepage.html">
+<form action="/homepage.html" method="post">
     <label for="email">Email:</label><br>
     <input type="text" id="email" name="email" placeholder="email"><br>
     <label for="email">Password:</label><br>
     <input type="password" id="password" name="password" placeholder="password"><br><br>
-    <input type="submit" formaction="/login" value="Login">
+    <button class="loginbottom" type="submit" formaction="/login">Login</button>
     <br><br>
     <h3>Eller opret en bruger her</h3>
 
-    <input type="submit" value="Opret bruger">
+    <button class="createuserbottom" type="submit" formaction="/createuser">Create user</button>
 </form>
 
 
