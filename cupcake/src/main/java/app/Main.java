@@ -1,10 +1,16 @@
 package app;
 
 import app.config.ThymeleafConfig;
+import app.controllers.OrderController;
 import app.controllers.UserController;
+import app.entities.Order;
+import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
+import app.persistence.OrderMapper;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
+
+import java.util.List;
 
 public class Main
 {
@@ -15,7 +21,7 @@ public class Main
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
 
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws DatabaseException
     {
         // Initializing Javalin and Jetty webserver
 
@@ -28,5 +34,6 @@ public class Main
 
         app.get("/", ctx ->  ctx.render("loginpage.html"));
         UserController.addRoutes(app, connectionPool);
+        OrderController.addRoutes(app, connectionPool);
     }
 }
