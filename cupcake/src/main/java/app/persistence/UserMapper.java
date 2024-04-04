@@ -20,7 +20,7 @@ public class UserMapper
             ResultSet rs = ps.executeQuery();
             if (rs.next())
             {
-                int userId = rs.getInt("user_id");
+                int userId = rs.getInt("users_id");
                 int balance = rs.getInt("balance");
                 String role = rs.getString("role");
                 return new User(userId, eMail, password, balance, role);
