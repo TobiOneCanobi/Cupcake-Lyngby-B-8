@@ -4,19 +4,24 @@
     <meta charset="UTF-8">
     <title>adminoverview</title>
     <link rel="stylesheet" href="../public/css/style.css" th:href="@{css/style.css}"/>
-
-    <a href="homepage.html" th:href="@{/}">
-        <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}" width="35%"/>
-    </a>
+    <button class="webform" type="submit">Tilbage</button>
+    <div class="flex-container">
+        <div><a href="loginpage.html" th:href="@{/}">
+            <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}" width="100%"/>
+        </a>
+        </div>
+    </div>
 </head>
 <body>
 
 <br><br>
-<button type="submit" name="taskId" formaction="tilbage">Tilbage</button>
 
 
-<h1>Ordre bestilt af kunder</h1>
+<div class="webform center-two">
 
+    <div class="center-text">
+    <h1>Ordre bestilt af kunder</h1>
+    </div>
 
 <table class="table">
     <tr>
@@ -35,7 +40,7 @@
         <td>Bund: Vanilje, Topping: Chokolade</td>
         <td>2</td>
         <td>40kr</td>
-        <td><input type="submit" value="slet"></td>
+    <td><button type="submit" value="slet">Slet</button></td>
     </tr>
     <tr>
         <td>Itachi</td>

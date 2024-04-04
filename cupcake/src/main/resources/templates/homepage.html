@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>homepage</title>
     <link rel="stylesheet" href="../public/css/style.css" th:href="@{css/style.css}"/>
-
+    <button class="webform" type="submit">Log af</button>
     <div class="flex-container">
         <div><a href="loginpage.html" th:href="@{/}">
             <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}" width="100%"/>
@@ -14,7 +14,7 @@
 </head>
 <body>
 
-
+<div>
 <div class="webform center-text center-two">
 
     <form th:action="@{/orderoverview}" method="get">
@@ -25,17 +25,21 @@
 
 <a class="text-margin" href="url">Bruger email</a>
 
-<a class="text-margin" href="url">kurve ikon</a>
+   <a href="shoppingcart.html" th:href="@{/}">
+        <img src="../public/images/shoppingcartlogo.png" th:src="@{/images/shoppingcartlogo.png}" width="3%"/>
+    </a>
+    </div>
 </div>
 <br>
 <div class="webform center-two">
     <div class="center">
 <h1>Velkommen ombord</h1>
-<h3>Du har god smag. Vælg og bestil her</h3>
+<h3>Du har virkelig god smag! Vælg og bestil din cupcake her</h3>
 
 
 <br><br>
-</div>
+
+    <div>
     <select name="Vælg bund">
         <option value="" disabled selected>Vælg en bund</option>
         <option value="Chokolade">Chokolade</option>
@@ -56,10 +60,14 @@
         <option value="2">2</option>
         <option value="3">3</option>
     </select>
+
+    <br><br>
+        <button type="submit" value="kurv">Læg i kurv</button>
+
+
 </div>
-<input type="submit" value="Læg i kurv">
-
-
+    </div>
+</div>
 
 
 </body>

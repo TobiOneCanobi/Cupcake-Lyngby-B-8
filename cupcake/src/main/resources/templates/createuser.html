@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>createuser</title>
     <link rel="stylesheet" href="../public/css/style.css" th:href="@{css/style.css}"/>
-
+    <button class="webform" type="submit">Tilbage</button>
     <div class="flex-container">
         <div><a href="loginpage.html" th:href="@{/}">
             <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}" width="100%"/>
@@ -15,25 +15,23 @@
 <body>
 
 
-<br><br>
-<input type="submit" value="Tilbage">
+
+
 <br><br>
 <form method="post" >
-    <input type="text" name="email" placeholder="indtast email"/>
-    <input type="password" name="password1" placeholder="indtast password"/>
-    <input type="password" name="password2" placeholder="indtast password igen"/>
+
 
 <div class="center">
-    <div class="webform-createuser center minheight">
+    <div class="webform">
         <h2>Opret din bruger her</h2>
 
 
-    <label for="fname">Indtast din email:</label><br>
-    <input type="text" id="fname" name="fname" placeholder="Ny email"><br><br>
-    <label for="lname"> Indtast dit password:</label><br>
-    <input type="password" id="lname" name="lname" placeholder="Nyt password"><br><br>
-    <label for="lname"> Indtast dit password igen:</label><br>
-    <input type="password" id="lname1" name="lname" placeholder="Nyt password"><br><br>
+    <label for="email">Indtast din email:</label><br>
+    <input type="text" id="email" name="email" placeholder="Indtast email"><br><br>
+    <label for="password1"> Indtast dit password:</label><br>
+    <input type="password" id="password1" name="password1" placeholder="Indtast password"><br><br>
+    <label for="password2"> Indtast dit password igen:</label><br>
+    <input type="password" id="password2" name="password2" placeholder="Indtast password igen"><br><br>
 
     <button type="submit" formaction="/createuser">opret bruger</button>
     <div><p th:text="${message}"></p></div>
