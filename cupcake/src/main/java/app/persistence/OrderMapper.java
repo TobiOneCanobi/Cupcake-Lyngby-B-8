@@ -24,7 +24,7 @@ public class OrderMapper
             while (rs.next())
             {
                 int orderId = rs.getInt("order_id");
-                int userId = rs.getInt("user_id");
+                int userId = rs.getInt("users_id");
 
                 listOfOrders.add(new Order(orderId, userId));
             }
