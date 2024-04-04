@@ -15,15 +15,13 @@
 <br><br>
 <input type="submit" value="Tilbage">
 <br><br>
-<form action="/loginpage.html">
-    <label for="fname">Indtast din email:</label><br>
-    <input type="text" id="fname" name="fname" placeholder="Ny email"><br><br>
-    <label for="lname"> Indtast dit password:</label><br>
-    <input type="password" id="lname" name="lname" placeholder="Nyt password"><br><br>
-    <label for="lname"> Indtast dit password igen:</label><br>
-    <input type="password" id="lname" name="lname" placeholder="Nyt password"><br><br>
+<form method="post" >
+    <input type="text" name="email" placeholder="indtast email"/>
+    <input type="password" name="password1" placeholder="indtast password"/>
+    <input type="password" name="password2" placeholder="indtast password igen"/>
 
-    <input type="submit" value="Opret bruger">
+    <button type="submit" formaction="/createuser">opret bruger</button>
+    <div><p th:text="${message}"></p></div>
 
 </form>
 

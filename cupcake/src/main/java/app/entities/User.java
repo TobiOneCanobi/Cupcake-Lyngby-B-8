@@ -4,15 +4,15 @@ public class User
 {
     private int userid;
     private String email;
-    private String passWord;
+    private String password;
     private int balance;
     private String role;
 
-    public User(int userid, String email, String passWord, int balance, String role)
+    public User(int userid, String email, String password, int balance, String role)
     {
         this.userid = userid;
         this.email = email;
-        this.passWord = passWord;
+        this.password = password;
         this.balance = balance;
         this.role = role;
     }
@@ -37,14 +37,14 @@ public class User
         this.email = email;
     }
 
-    public String getPassWord()
+    public String getPassword()
     {
-        return passWord;
+        return password;
     }
 
-    public void setPassWord(String passWord)
+    public void setPassword(String password)
     {
-        this.passWord = passWord;
+        this.password = password;
     }
 
     public int getBalance()
@@ -73,7 +73,7 @@ public class User
         return "User{" +
                 "userid=" + userid +
                 ", email='" + email + '\'' +
-                ", passWord='" + passWord + '\'' +
+                ", password='" + password + '\'' +
                 ", balance=" + balance +
                 ", role='" + role + '\'' +
                 '}';

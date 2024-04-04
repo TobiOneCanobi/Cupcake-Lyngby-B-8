@@ -55,7 +55,7 @@ public class UserController
                 UserMapper.createuser(email, password1,0, "customer",connectionPool);
                 ctx.attribute("message", "Du er hermed oprettet med brugernavn: " + email +
                         ". Nu skal du logge på.");
-                ctx.render("index.html");
+                ctx.render("loginpage.html");
             }
 
             catch (DatabaseException e)
