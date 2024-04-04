@@ -58,13 +58,30 @@
     </tr>
 </table>
 
-
-
-
-
-
-
-
+<form method="post">
+    <table class="task-table">
+        <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>User E-mail</th>
+            <th>Topping Type</th>
+            <th>Bottom Type</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order: ${orders}">
+            <td th:text="${order.orderId}"></td>
+            <td th:text="${order.userEmail}"></td>
+            <td th:text="${order.toppingType}"></td>
+            <td th:text="${order.bottomType}"></td>
+            <td th:text="${order.quantity}"></td>
+            <td th:text="${order.totalPrice}"></td>
+        </tr>
+        </tbody>
+    </table>
+</form>
 
 </body>
 </html>
