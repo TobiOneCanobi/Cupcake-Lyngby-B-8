@@ -19,17 +19,20 @@
         <p style="font-family: Brush Script Std; font-weight: lighter; font-size: 50px;">Velkommen</p>
         <h3>Vær venling at logge ind</h3>
 
-<form action="/homepage.html" method="post">
-    <label for="email">Email:</label><br>
-    <input type="text" id="email" name="email" placeholder="email"><br>
-    <label for="email">Password:</label><br>
-    <input type="password" id="password" name="password" placeholder="password"><br><br>
-    <button class="loginbottom" type="submit" formaction="/login">Login</button>
-    <p class="error" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></p>
-    <br><br>
 
-            <h2 class="center" style="font-family: Brush Script Std; font-weight: lighter; font-size: 30px;">Eller</h2>
-            <h3 class="center">Opret en bruger her</h3>
+        <form action="/login" method="post">
+            <label for="email">Email:</label><br>
+            <input type="text" id="email" name="email" placeholder="email"><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" placeholder="password"><br><br>
+            <button class="loginbottom" type="submit">Login</button>
+            <p class="error" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></p>
+            <br><br>
+        </form>
+
+
+        <h2 class="center" style="font-family: Brush Script Std; font-weight: lighter; font-size: 30px;">Eller</h2>
+        <h3 class="center">Opret en bruger her</h3>
 
         </form>
 
@@ -42,6 +45,8 @@
     </form>
 </div>
 
+
+    </div>
     </div>
 </div>
 

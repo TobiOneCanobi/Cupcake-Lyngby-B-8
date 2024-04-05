@@ -9,6 +9,8 @@ import io.javalin.http.Context;
 
 import java.util.regex.Pattern;
 
+import static app.controllers.CupcakeController.loadBottomsAndToppings;
+
 public class UserController
 {
 
@@ -22,29 +24,30 @@ public class UserController
         app.get("homepage", ctx -> ctx.render("homepage.html"));
         app.get("shoppingcart", ctx -> ctx.render("shoppingcart.html"));
         app.get("confirmation", ctx -> ctx.render("confirmation.html"));
+        app.get("/loadcupcakes", ctx -> loadBottomsAndToppings(ctx, connectionPool));
 
     }
 
     public static void login(Context ctx, ConnectionPool connectionPool)
     {
-        // Hent form parametre
+
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
 
-        ctx.sessionAttribute("userEmail",email);
-
-        try
-        {
+        try {
             User user = UserMapper.login(email, password, connectionPool);
-            ctx.sessionAttribute("currentUser", user);
-            // Hvis ja, send videre til forsiden med login besked
-            ctx.attribute("message", "Du er nu logget ind");
-            ctx.render("homepage.html"); // skal render til vores main page
-        }
-        catch (DatabaseException e)
-        {
-            // Hvis nej, send tilbage til login side med fejl besked
-            ctx.attribute("message", e.getMessage() );
+            if (user != null) {
+                ctx.sessionAttribute("currentUser", user);
+                ctx.sessionAttribute("userEmail", email);
+                ctx.redirect("/loadcupcakes"); // Redirect to load cupcakes and then to the homepage
+            } else {
+                // Handle login failure
+                ctx.attribute("loginError", "Invalid username or password");
+                ctx.render("loginpage.html");
+            }
+        } catch (DatabaseException e) {
+            // Handle database error
+            ctx.attribute("loginError", "An error occurred. Please try again.");
             ctx.render("loginpage.html");
         }
 

@@ -47,37 +47,37 @@
         <h2 style="font-family: Brush Script Std; font-weight: lighter; font-size: 40px;">Velkommen ombord</h2>
         <h3>Du har virkelig god smag! Vælg og bestil din cupcake her</h3>
 
-
         <br><br>
+        <form method="get">
+            <div class="custom-select">
+                <select name="Vælg bund">
+                    <option value="" disabled selected>Vælg en bund</option>
+                    <th:block th:each="bottom : ${bottoms}">
+                        <option th:value="${bottom.bottomId}" th:text="${bottom.type}"></option>
+                    </th:block>
+                </select>
 
-        <div class="custom-select">
-            <select name="Vælg bund">
-                <option hidden>Vælg en bund</option>
-                <option value="Chokolade">Chokolade</option>
-                <option value="Vanilje">Vanilje</option>
-                <option value="Mango">Mango</option>
-            </select>
+                <select name="Vælg topping">
+                    <option value="" disabled selected>Vælg en topping</option>
+                    <th:block th:each="topping : ${toppings}">
+                        <option th:value="${topping.toppingId}" th:text="${topping.type}"></option>
+                    </th:block>
+                </select>
 
+                <select name="Vælg antal">
+                    <option value="" disabled selected>Vælg antal</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
 
-            <select name="Vælg topping">
-                <option hidden>Vælg en topping</option>
-                <option value="Jordbær">Jordbær</option>
-                <option value="Yuzu">Yuzu</option>
-                <option value="Hinbær">Hinbær</option>
-            </select>
+                <br><br>
 
-            <select name="Vælg antal">
-                <option hidden>Vælg antal</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
-
-            <br><br>
-            <button class="button-width" type="submit" value="kurv" style="float: right;">Læg i kurv</button>
-
-
-        </div>
+            </div>
+        </form>
+        <form>
+            <button type="submit" value="kurv">Læg i kurv</button>
+        </form>
     </div>
 </div>
 
