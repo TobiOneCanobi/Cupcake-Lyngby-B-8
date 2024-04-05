@@ -9,6 +9,8 @@ public class Order
     private String bottomType;
     private int quantity;
     private int totalPrice;
+    private int toppingPrice;
+    private int bottomPrice;
 
     public Order(int orderId, int userId)
     {
@@ -24,6 +26,16 @@ public class Order
         this.toppingType = toppingType;
         this.bottomType = bottomType;
         this.quantity = quantity;
+        this.totalPrice = totalPrice;
+    }
+
+    public Order(String toppingType, String bottomType, int quantity, int toppingPrice, int bottomPrice, int totalPrice)
+    {
+        this.toppingType = toppingType;
+        this.bottomType = bottomType;
+        this.quantity = quantity;
+        this.toppingPrice = toppingPrice;
+        this.bottomPrice = bottomPrice;
         this.totalPrice = totalPrice;
     }
 
@@ -97,6 +109,26 @@ public class Order
         this.userId = userId;
     }
 
+    public int getToppingPrice()
+    {
+        return toppingPrice;
+    }
+
+    public void setToppingPrice(int toppingPrice)
+    {
+        this.toppingPrice = toppingPrice;
+    }
+
+    public int getBottomPrice()
+    {
+        return bottomPrice;
+    }
+
+    public void setBottomPrice(int bottomPrice)
+    {
+        this.bottomPrice = bottomPrice;
+    }
+
     @Override
     public String toString()
     {
@@ -108,6 +140,8 @@ public class Order
                 ", bottomType='" + bottomType + '\'' +
                 ", quantity=" + quantity +
                 ", totalPrice=" + totalPrice +
+                ", toppingPrice=" + toppingPrice +
+                ", bottomPrice=" + bottomPrice +
                 '}';
     }
 }

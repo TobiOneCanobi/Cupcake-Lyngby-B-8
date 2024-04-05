@@ -7,12 +7,15 @@ import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
+import java.util.regex.Pattern;
+
 public class UserController
 {
 
     public static void addRoutes(Javalin app, ConnectionPool connectionPool)
     {
         app.post("login", ctx -> login(ctx, connectionPool));
+        app.get("return", ctx -> ctx.render("loginpage.html"));
         app.get("logout", ctx -> logout(ctx));
         app.get("createuser", ctx -> ctx.render("createuser.html"));
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
@@ -49,25 +52,42 @@ public class UserController
         String email = ctx.formParam("email");
         String password1 = ctx.formParam("password1");
         String password2 = ctx.formParam("password2");
+        if (!email.contains("@"))
+        {
+            ctx.attribute("message", "Din email skal indeholde '@'! Prøv igen.");
+            ctx.render("createuser.html");
+        }
 
-        if (password1.equals(password2))
+        else if (!password1.equals(password2))
+        {
+            ctx.attribute("message", "Dine to passwords matcher ikke! Prøv igen");
+            ctx.render("createuser.html");
+        }
+      //  else if (!password1.matches(".*[A-Z].*") || password1.length() < 4)
+            else if (!Pattern.matches(".*[\\p{Lu}\\p{N}æøåÆØÅ].*", password1) || password1.length() < 4)
+        {
+            ctx.attribute("message", " kan kun havde normale bogstav og tal, skal mindst være 4 bogstaver langt");
+            ctx.render("createuser.html");
+
+        } else if (password1.equals(password2))
         {
             try
             {
                 UserMapper.createuser(email, password1,0, "customer",connectionPool);
-                ctx.attribute("message", "Du er hermed oprettet med brugernavn: " + email +
+                ctx.attribute("message", "Du er hermed oprettet med email: " + email +
                         ". Nu skal du logge på.");
                 ctx.render("loginpage.html");
             }
 
             catch (DatabaseException e)
             {
-                ctx.attribute("message", "Dit brugernavn findes allerede. Prøv igen, eller log ind");
+                ctx.attribute("message", "Dit email er allerede i brug. Prøv igen, eller log ind");
                 ctx.render("createuser.html");
             }
-        } else
+        }
+        else
         {
-            ctx.attribute("message", "Dine to passwords matcher ikke! Prøv igen");
+            ctx.attribute("noget gik galt, PANIC!");
             ctx.render("createuser.html");
         }
     }
