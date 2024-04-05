@@ -25,6 +25,8 @@ public class UserController
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
 
+        ctx.sessionAttribute("userEmail",email);
+
         try
         {
             User user = UserMapper.login(email, password, connectionPool);

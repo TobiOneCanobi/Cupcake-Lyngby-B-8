@@ -112,6 +112,35 @@ button[type=submit]:hover {
     margin: 100px;
 }
 
+.task-table {
+    border-collapse: collapse;
+    font-size: 1.2rem;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+}
+
+.task-table td, .task-table th {
+    border: 1px solid #ddd;
+    padding: 10px;
+
+}
+
+.task-table tr:nth-child(even) {
+    background-color: silver;
+}
+
+.usermail {
+    background-color: #d9cdcd;
+    min-width: auto;
+    max-width: fit-content;
+    min-height: auto;
+    padding: 10px 20px;
+    border-radius: 20px;
+}
+
+
+
 
 
 .image-hover {

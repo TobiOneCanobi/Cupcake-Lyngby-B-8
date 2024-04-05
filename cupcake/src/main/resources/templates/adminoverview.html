@@ -16,6 +16,9 @@
 
 <br><br>
 
+<div class="usermail">
+    Logget ind som: <span class="text-margin" th:text="${session.userEmail}"></span>
+</div>
 
 <div class="webform center-two">
 
@@ -47,24 +50,41 @@
         <td>Bund: Vanilje, Topping: Chokolade</td>
         <td>4</td>
         <td>80kr</td>
-        <td><button type="submit" value="slet">Slet</button></td>
+        <td><input type="submit" value="slet"></td>
     </tr>
     <tr>
         <td>Kazuya</td>
         <td>Bund: Heihachi, Topping: Jin</td>
         <td>1</td>
         <td>20kr</td>
-        <td><button type="submit" value="slet">Slet</button></td>
+        <td><input type="submit" value="slet"></td>
     </tr>
 </table>
 
-
-
-
-
-
-</div>
-
+    <form method="post">
+        <table class="task-table">
+            <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>User E-mail</th>
+                <th>Topping Type</th>
+                <th>Bottom Type</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order: ${orders}">
+                <td th:text="${order.orderId}"></td>
+                <td th:text="${order.userEmail}"></td>
+                <td th:text="${order.toppingType}"></td>
+                <td th:text="${order.bottomType}"></td>
+                <td th:text="${order.quantity}"></td>
+                <td th:text="${order.totalPrice}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
 
 </body>
 </html>

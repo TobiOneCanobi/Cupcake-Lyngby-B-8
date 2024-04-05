@@ -52,12 +52,9 @@ public class OrderMapper
             }
         } catch (SQLException e)
         {
-            e.printStackTrace(); // Tilføj denne linje for at logge fejlen
+            e.printStackTrace();
             throw new DatabaseException("Fejl ved indlæsning af ordrer.", e.getMessage());
         }
-
         return listOfOrders;
     }
-
-
 }
