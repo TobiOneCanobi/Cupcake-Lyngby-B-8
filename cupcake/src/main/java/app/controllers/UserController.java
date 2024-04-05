@@ -7,6 +7,8 @@ import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
+import java.util.regex.Pattern;
+
 public class UserController
 {
 
@@ -55,13 +57,16 @@ public class UserController
             ctx.render("createuser.html");
         }
 
-        if (!password1.equals(password2))
+        else if (!password1.equals(password2))
         {
             ctx.attribute("message", "Dine to passwords matcher ikke! Prøv igen");
             ctx.render("createuser.html");
         }
-        else if (!password1.matches(".*[A-Z].*") || password1.length() < 4)
+      //  else if (!password1.matches(".*[A-Z].*") || password1.length() < 4)
+            else if (!Pattern.matches(".*[\\p{Lu}\\p{N}æøåÆØÅ].*", password1) || password1.length() < 4)
         {
+            ctx.attribute("message", " kan kun havde normale bogstav og tal, skal mindst være 4 bogstaver langt");
+            ctx.render("createuser.html");
 
         } else if (password1.equals(password2))
         {
