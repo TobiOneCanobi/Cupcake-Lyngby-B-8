@@ -15,8 +15,6 @@ public class CupcakeController
 
     public static void addRoutes(Javalin app, ConnectionPool connectionPool)
     {
-
-        // New route for handling form submission
        // app.post("/order", ctx -> handleOrder(ctx, connectionPool));
     }
 
@@ -27,8 +25,6 @@ public class CupcakeController
         {
             List<Bottom> bottomlist = CupCakeMapper.loadBottoms(connectionPool);
             List<Topping> toppinglist = CupCakeMapper.loadToppings(connectionPool);
-
-
 
 
             ctx.attribute("bottoms", bottomlist);
@@ -42,7 +38,6 @@ public class CupcakeController
     }
 
 
-    // Method to handle the order form submission
     public static void handleOrder(Context ctx, ConnectionPool connectionPool)
     {
         // You can process the order here
