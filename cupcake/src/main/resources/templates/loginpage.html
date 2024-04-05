@@ -24,12 +24,9 @@
     <p class="error" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></p>
     <br><br>
     <h3>Eller opret en bruger her</h3>
-
 </form>
 
-<!--<form th:action="@{/createuser}" method="get">
-    <button type="submit">Create User</button>
-</form> -->
+
 <div>
     <a th:if="${session.currentUser != null}" href="loginpage.html" th:href="@{/logout}">Logout</a>
     <span  th:if="${session.currentUser != null}"> | </span>
