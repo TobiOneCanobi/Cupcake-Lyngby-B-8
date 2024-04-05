@@ -45,34 +45,36 @@
 
         <br><br>
 
-        <div>
-            <select name="Vælg bund">
-                <option value="" disabled selected>Vælg en bund</option>
-                <option value="Chokolade">Chokolade</option>
-                <option value="Vanilje">Vanilje</option>
-                <option value="Mango">Mango</option>
-            </select>
+        <form th:action="@{/order}" method="post">
+            <div>
+                <select name="Vælg bund">
+                    <option value="" disabled selected>Vælg en bund</option>
+                    <th:block th:each="bottom : ${bottoms}">
+                        <option th:value="${bottom.id}" th:text="${bottom.type}"></option>
+                    </th:block>
+                </select>
 
-            <select name="Vælg topping">
-                <option value="" disabled selected>Vælg en topping</option>
-                <option value="Jordbær">Jordbær</option>
-                <option value="Yuzu">Yuzu</option>
-                <option value="Hinbær">Hinbær</option>
-            </select>
+                <select name="Vælg topping">
+                    <option value="" disabled selected>Vælg en topping</option>
+                    <th:block th:each="topping : ${toppings}">
+                        <option th:value="${topping.id}" th:text="${topping.type}"></option>
+                    </th:block>
+                </select>
 
-            <select name="Vælg antal">
-                <option value="" disabled selected>Vælg antal</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
+                <select name="Vælg antal">
+                    <option value="" disabled selected>Vælg antal</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
 
-            <br><br>
-            <button type="submit" value="kurv">Læg i kurv</button>
-
-
-        </div>
+                <br><br>
+                <button type="submit" value="kurv">Læg i kurv</button>
+            </div>
+        </form>
     </div>
+
+
 </div>
 
 
