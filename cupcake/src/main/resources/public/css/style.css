@@ -114,3 +114,21 @@ button[type=submit]:hover {
 
 
 
+.image-hover {
+    transition: filter 0.3s ease;
+}
+
+.image-hover:hover,
+.image-hover:active {
+    filter: brightness(70%);
+}
+
+shoppingcart-logo-hover {
+    transition: filter 0.3s ease;
+}
+
+.shoppingcart-logo-hover:hover,
+.shoppingcart-logo-hover:active {
+    filter: brightness(150%);
+}
+
