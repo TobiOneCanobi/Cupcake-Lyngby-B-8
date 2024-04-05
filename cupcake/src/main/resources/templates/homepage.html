@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="../public/css/style.css" th:href="@{css/style.css}"/>
 
     <form th:action="@{/logout}" method="get">
-    <button class="webform" type="submit">Log af</button>
+        <button class="webform" type="submit">Log af</button>
     </form>
 
     <div class="flex-container image-hover">
@@ -29,16 +29,13 @@
         </form>
 
         <form th:action="@{/orderoverviewcustommer}" method="get">
-            <button class="text-margin"  type="submit">Kunde overblik</button>
+            <button class="text-margin" type="submit">Kunde overblik</button>
         </form>
 
-
-
-
-
-   <a href="shoppingcart.html" th:href="@{shoppingcart}">
-        <img class="shoppingcart-logo-hover" src="../public/images/shoppingcartlogo.png" th:src="@{/images/shoppingcartlogo.png}" width="15%"/>
-    </a>
+        <a href="shoppingcart.html" th:href="@{shoppingcart}">
+            <img class="shoppingcart-logo-hover" src="../public/images/shoppingcartlogo.png"
+                 th:src="@{/images/shoppingcartlogo.png}" width="15%"/>
+        </a>
     </div>
 </div>
 <br>
@@ -70,9 +67,7 @@
                     <option value="2">2</option>
                     <option value="3">3</option>
                 </select>
-
                 <br><br>
-
             </div>
         </form>
         <form>
@@ -80,7 +75,6 @@
         </form>
     </div>
 </div>
-
 
 </body>
 </html>

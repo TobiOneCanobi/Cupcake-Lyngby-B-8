@@ -1,6 +1,8 @@
 package app.persistence;
+
 import app.entities.User;
 import app.exceptions.DatabaseException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,17 +35,22 @@ public class UserMapper
             throw new DatabaseException("DB fejl", e.getMessage());
         }
     }
-    public static boolean emailExists(String email, ConnectionPool connectionPool) throws DatabaseException {
+
+    public static boolean emailExists(String email, ConnectionPool connectionPool) throws DatabaseException
+    {
         String sql = "SELECT COUNT(*) AS count FROM users WHERE email = ?";
 
-        try (Connection connection = connectionPool.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (Connection connection = connectionPool.getConnection(); PreparedStatement ps = connection.prepareStatement(sql))
+        {
             ps.setString(1, email);
 
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
+            if (rs.next())
+            {
                 return rs.getInt("count") > 0;
             }
-        } catch (SQLException e) {
+        } catch (SQLException e)
+        {
             throw new DatabaseException("Database error", e.getMessage());
         }
 
@@ -52,7 +59,8 @@ public class UserMapper
 
     public static void createuser(String email, String password, int balance, String role, ConnectionPool connectionPool) throws DatabaseException
     {
-        if (emailExists(email, connectionPool)) {
+        if (emailExists(email, connectionPool))
+        {
             throw new DatabaseException("Email bliver allerede brugt. Log på eller vælg en anden.");
         }
         String sql = "insert into users (email, password, balance, role) values (?,?,?,?)";
@@ -96,8 +104,7 @@ public class UserMapper
             {
                 throw new DatabaseException("Fejl i opdatering af en task");
             }
-        }
-        catch (SQLException e)
+        } catch (SQLException e)
         {
             throw new DatabaseException("Fejl i opdatering af en task", e.getMessage());
         }

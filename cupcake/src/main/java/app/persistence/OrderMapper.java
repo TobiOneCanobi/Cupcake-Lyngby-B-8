@@ -59,7 +59,8 @@ public class OrderMapper
     }
 
 
-    public static List<Order> loadOrdersCustomer(ConnectionPool connectionPool) throws DatabaseException {
+    public static List<Order> loadOrdersCustomer(ConnectionPool connectionPool) throws DatabaseException
+    {
         List<Order> listOfOrders = new ArrayList<>();
 
         String sql = "SELECT \n" +
@@ -77,9 +78,11 @@ public class OrderMapper
                 "    public.bottom b ON ol.bottom_id = b.bottom_id";
 
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement ps = connection.prepareStatement(sql))
+        {
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
+            while (rs.next())
+            {
                 String toppingType = rs.getString("topping_type");
                 String bottomType = rs.getString("bottom_type");
                 int quantity = rs.getInt("quantity");
@@ -90,13 +93,13 @@ public class OrderMapper
                 Order order = new Order(toppingType, bottomType, quantity, toppingPrice, bottomPrice, totalPrice);
                 listOfOrders.add(order);
             }
-        } catch (SQLException e) {
+        } catch (SQLException e)
+        {
             e.printStackTrace();
             throw new DatabaseException("Fejl ved indlæsning af ordrer.", e.getMessage());
         }
         return listOfOrders;
     }
-
 
 
 }

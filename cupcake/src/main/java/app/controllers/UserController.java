@@ -34,24 +34,29 @@ public class UserController
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
 
-        try {
+        try
+        {
             User user = UserMapper.login(email, password, connectionPool);
-            if (user != null) {
+            if (user != null)
+            {
                 ctx.sessionAttribute("currentUser", user);
                 ctx.sessionAttribute("userEmail", email);
                 ctx.redirect("/loadcupcakes"); // Redirect to load cupcakes and then to the homepage
-            } else {
+            } else
+            {
                 // Handle login failure
                 ctx.attribute("loginError", "Invalid username or password");
                 ctx.render("loginpage.html");
             }
-        } catch (DatabaseException e) {
+        } catch (DatabaseException e)
+        {
             // Handle database error
             ctx.attribute("loginError", "An error occurred. Please try again.");
             ctx.render("loginpage.html");
         }
 
     }
+
     private static void createUser(Context ctx, ConnectionPool connectionPool)
     {
         // Hent form parametre
@@ -62,15 +67,13 @@ public class UserController
         {
             ctx.attribute("message", "Din email skal indeholde '@'! Prøv igen.");
             ctx.render("createuser.html");
-        }
-
-        else if (!password1.equals(password2))
+        } else if (!password1.equals(password2))
         {
             ctx.attribute("message", "Dine to passwords matcher ikke! Prøv igen");
             ctx.render("createuser.html");
         }
-      //  else if (!password1.matches(".*[A-Z].*") || password1.length() < 4)
-            else if (!Pattern.matches(".*[\\p{Lu}\\p{N}æøåÆØÅ].*", password1) || password1.length() < 4)
+        //  else if (!password1.matches(".*[A-Z].*") || password1.length() < 4)
+        else if (!Pattern.matches(".*[\\p{Lu}\\p{N}æøåÆØÅ].*", password1) || password1.length() < 4)
         {
             ctx.attribute("message", " kan kun havde normale bogstav og tal, skal mindst være 4 bogstaver langt");
             ctx.render("createuser.html");
@@ -79,19 +82,16 @@ public class UserController
         {
             try
             {
-                UserMapper.createuser(email, password1,0, "customer",connectionPool);
+                UserMapper.createuser(email, password1, 0, "customer", connectionPool);
                 ctx.attribute("message", "Du er hermed oprettet med email: " + email +
                         ". Nu skal du logge på.");
                 ctx.render("loginpage.html");
-            }
-
-            catch (DatabaseException e)
+            } catch (DatabaseException e)
             {
                 ctx.attribute("message", "Dit email er allerede i brug. Prøv igen, eller log ind");
                 ctx.render("createuser.html");
             }
-        }
-        else
+        } else
         {
             ctx.attribute("noget gik galt, PANIC!");
             ctx.render("createuser.html");

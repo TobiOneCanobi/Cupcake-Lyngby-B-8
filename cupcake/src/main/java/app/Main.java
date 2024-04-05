@@ -25,15 +25,14 @@ public class Main
     public static void main(String[] args) throws DatabaseException
     {
         // Initializing Javalin and Jetty webserver
-
-        Javalin app = Javalin.create(config -> {
+        Javalin app = Javalin.create(config ->
+        {
             config.staticFiles.add("/public");
             config.fileRenderer(new JavalinThymeleaf(ThymeleafConfig.templateEngine()));
         }).start(7070);
 
         // Routing
-
-        app.get("/", ctx ->  ctx.render("loginpage.html"));
+        app.get("/", ctx -> ctx.render("loginpage.html"));
         UserController.addRoutes(app, connectionPool);
         OrderController.addRoutes(app, connectionPool);
         CupcakeController.addRoutes(app, connectionPool);
