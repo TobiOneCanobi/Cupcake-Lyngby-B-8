@@ -33,9 +33,28 @@ public class UserMapper
             throw new DatabaseException("DB fejl", e.getMessage());
         }
     }
+    public static boolean emailExists(String email, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT COUNT(*) AS count FROM users WHERE email = ?";
+
+        try (Connection connection = connectionPool.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, email);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("count") > 0;
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Database error", e.getMessage());
+        }
+
+        return false;
+    }
 
     public static void createuser(String email, String password, int balance, String role, ConnectionPool connectionPool) throws DatabaseException
     {
+        if (emailExists(email, connectionPool)) {
+            throw new DatabaseException("Email bliver allerede brugt. Log på eller vælg en anden.");
+        }
         String sql = "insert into users (email, password, balance, role) values (?,?,?,?)";
 
         try (Connection connection = connectionPool.getConnection(); PreparedStatement ps = connection.prepareStatement(sql))
