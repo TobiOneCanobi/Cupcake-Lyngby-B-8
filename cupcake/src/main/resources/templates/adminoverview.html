@@ -5,7 +5,7 @@
     <title>adminoverview</title>
     <link rel="stylesheet" href="../public/css/style.css" th:href="@{css/style.css}"/>
     <button class="webform" type="submit">Tilbage</button>
-    <div class="flex-container">
+    <div class="flex-container image-hover">
         <div><a href="loginpage.html" th:href="@{/}">
             <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}" width="100%"/>
         </a>
@@ -23,45 +23,43 @@
 <div class="webform center-two">
 
     <div class="center-text">
-        <h1>Ordre bestilt af kunder</h1>
+    <h1>Ordre bestilt af kunder</h1>
     </div>
 
-    <table class="table">
-        <tr>
-            <th>Kunde</th>
-            <th>Cupcake</th>
-            <th>Antal</th>
-            <th>Pris</th>
-            <th><img src="../public/images/logo.png" width="40" height="40"></th>
+<table class="table">
+    <tr>
+        <th>Kunde</th>
+        <th>Cupcake</th>
+        <th>Antal</th>
+        <th>Pris</th>
+        <th><img  src="../public/images/logo.png"  width="40" height="40"></th>
 
 
-        </tr>
-        <tr>
+    </tr>
+    <tr>
 
-        <tr>
-            <td>Masih</td>
-            <td>Bund: Vanilje, Topping: Chokolade</td>
-            <td>2</td>
-            <td>40kr</td>
-            <td>
-                <button type="submit" value="slet">Slet</button>
-            </td>
-        </tr>
-        <tr>
-            <td>Itachi</td>
-            <td>Bund: Vanilje, Topping: Chokolade</td>
-            <td>4</td>
-            <td>80kr</td>
-            <td><input type="submit" value="slet"></td>
-        </tr>
-        <tr>
-            <td>Kazuya</td>
-            <td>Bund: Heihachi, Topping: Jin</td>
-            <td>1</td>
-            <td>20kr</td>
-            <td><input type="submit" value="slet"></td>
-        </tr>
-    </table>
+    <tr>
+        <td>Masih</td>
+        <td>Bund: Vanilje, Topping: Chokolade</td>
+        <td>2</td>
+        <td>40kr</td>
+    <td><button type="submit" value="slet">Slet</button></td>
+    </tr>
+    <tr>
+        <td>Itachi</td>
+        <td>Bund: Vanilje, Topping: Chokolade</td>
+        <td>4</td>
+        <td>80kr</td>
+        <td><input type="submit" value="slet"></td>
+    </tr>
+    <tr>
+        <td>Kazuya</td>
+        <td>Bund: Heihachi, Topping: Jin</td>
+        <td>1</td>
+        <td>20kr</td>
+        <td><input type="submit" value="slet"></td>
+    </tr>
+</table>
 
     <form method="post">
         <table class="task-table">

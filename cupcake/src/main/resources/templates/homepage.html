@@ -5,7 +5,7 @@
     <title>homepage</title>
     <link rel="stylesheet" href="../public/css/style.css" th:href="@{css/style.css}"/>
     <button class="webform" type="submit">Log af</button>
-    <div class="flex-container">
+    <div class="flex-container image-hover">
         <div><a href="loginpage.html" th:href="@{/}">
             <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}" width="100%"/>
         </a>
@@ -14,64 +14,58 @@
 </head>
 <body>
 
-<div class="usermail">
-    Logget ind som: <span th:text="${session.userEmail}"></span>
-</div>
-
 <div>
-    <div class="webform center-text center-two">
+<div class="webform center-text center-two">
 
-        <form th:action="@{/orderoverview}" method="get">
-            <button class="text-margin" type="submit">Admin overblik</button>
-        </form>
+    <form th:action="@{/orderoverview}" method="get">
+        <button class="text-margin"  type="submit">Admin overblik</button>
+    </form>
 
-        <!-- <a class="text-margin" href="url">Bruger email ></span></a> -->
+    <a class="text-margin" href="url">Kunde overblik</a>
 
-        Logget ind som: <span class="text-margin" th:text="${session.userEmail}"></span>
+<a class="text-margin" href="url">Bruger email</a>
 
-        <a class="text-margin" href="url">Kunde overblik</a>
-
-        <a href="shoppingcart.html" th:href="@{/}">
-            <img src="../public/images/shoppingcartlogo.png" th:src="@{/images/shoppingcartlogo.png}" width="3%"/>
-        </a>
+   <a href="shoppingcart.html" th:href="@{/}">
+        <img class="shoppingcart-logo-hover" src="../public/images/shoppingcartlogo.png" th:src="@{/images/shoppingcartlogo.png}" width="3%"/>
+    </a>
     </div>
 </div>
 <br>
 <div class="webform center-two">
     <div class="center">
-        <h1>Velkommen ombord</h1>
-        <h3>Du har virkelig god smag! Vælg og bestil din cupcake her</h3>
+<h1>Velkommen ombord</h1>
+<h3>Du har virkelig god smag! Vælg og bestil din cupcake her</h3>
 
 
-        <br><br>
+<br><br>
 
-        <div>
-            <select name="Vælg bund">
-                <option value="" disabled selected>Vælg en bund</option>
-                <option value="Chokolade">Chokolade</option>
-                <option value="Vanilje">Vanilje</option>
-                <option value="Mango">Mango</option>
-            </select>
+    <div>
+    <select name="Vælg bund">
+        <option value="" disabled selected>Vælg en bund</option>
+        <option value="Chokolade">Chokolade</option>
+        <option value="Vanilje">Vanilje</option>
+        <option value="Mango">Mango</option>
+    </select>
 
-            <select name="Vælg topping">
-                <option value="" disabled selected>Vælg en topping</option>
-                <option value="Jordbær">Jordbær</option>
-                <option value="Yuzu">Yuzu</option>
-                <option value="Hinbær">Hinbær</option>
-            </select>
+    <select name="Vælg topping">
+        <option value="" disabled selected>Vælg en topping</option>
+        <option value="Jordbær">Jordbær</option>
+        <option value="Yuzu">Yuzu</option>
+        <option value="Hinbær">Hinbær</option>
+    </select>
 
-            <select name="Vælg antal">
-                <option value="" disabled selected>Vælg antal</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
+    <select name="Vælg antal">
+        <option value="" disabled selected>Vælg antal</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
 
-            <br><br>
-            <button type="submit" value="kurv">Læg i kurv</button>
+    <br><br>
+        <button type="submit" value="kurv">Læg i kurv</button>
 
 
-        </div>
+</div>
     </div>
 </div>
 
