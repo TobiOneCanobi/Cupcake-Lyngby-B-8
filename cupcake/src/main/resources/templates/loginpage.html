@@ -6,45 +6,39 @@
     <link rel="stylesheet" href="../public/css/style.css" th:href="@{css/style.css}"/>
 
     <div class="flex-container image-hover">
-    <div><a href="loginpage.html" th:href="@{/}">
-        <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}" width="100%"/>
-    </a>
-    </div>
+        <div><a href="loginpage.html" th:href="@{/}">
+            <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}" width="100%"/>
+        </a>
+        </div>
     </div>
 </head>
 <body>
 
 <div class="center">
-<div class="webform center minheight">
-<h1>Velkommen</h1>
-<h3>Vær venling at logge ind</h3>
+    <div class="webform center minheight">
+        <h1>Velkommen</h1>
+        <h3>Vær venling at logge ind</h3>
 
-<form action="/homepage.html" method="post">
-    <label for="email">Email:</label><br>
-    <input type="text" id="email" name="email" placeholder="email"><br>
-    <label for="email">Password:</label><br>
-    <input type="password" id="password" name="password" placeholder="password"><br><br>
-    <button class="loginbottom" type="submit" formaction="/login">Login</button>
-    <br><br>
-
-
+        <form action="/homepage.html" method="post">
+            <label for="email">Email:</label><br>
+            <input type="text" id="email" name="email" placeholder="email"><br>
+            <label for="email">Password:</label><br>
+            <input type="password" id="password" name="password" placeholder="password"><br><br>
+            <button class="loginbottom" type="submit" formaction="/login">Login</button>
+            <br><br>
 
 
-    <h2 class="center">Eller</h2>
-    <h3 class="center">Opret en bruger her</h3>
+            <h2 class="center">Eller</h2>
+            <h3 class="center">Opret en bruger her</h3>
 
-</form>
+        </form>
 
-<form th:action="@{/createuser}" method="get">
-    <button type="submit">Create User</button>
-</form>
+        <form th:action="@{/createuser}" method="get">
+            <button type="submit">Create User</button>
+        </form>
 
+    </div>
 </div>
-</div>
-
-
-
-
 
 
 </body>

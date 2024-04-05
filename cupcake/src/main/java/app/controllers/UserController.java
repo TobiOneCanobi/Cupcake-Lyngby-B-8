@@ -16,6 +16,9 @@ public class UserController
         app.get("logout", ctx -> logout(ctx));
         app.get("createuser", ctx -> ctx.render("createuser.html"));
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
+        app.get("homepage", ctx -> ctx.render("homepage.html"));
+        app.get("shoppingcart", ctx -> ctx.render("shoppingcart.html"));
+        app.get("confirmation", ctx -> ctx.render("confirmation.html"));
 
     }
 
