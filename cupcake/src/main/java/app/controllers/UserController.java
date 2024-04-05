@@ -7,6 +7,8 @@ import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
+import static app.controllers.CupcakeController.loadBottomsAndToppings;
+
 public class UserController
 {
 
@@ -16,33 +18,34 @@ public class UserController
         app.get("logout", ctx -> logout(ctx));
         app.get("createuser", ctx -> ctx.render("createuser.html"));
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
+        app.get("/loadcupcakes", ctx -> loadBottomsAndToppings(ctx, connectionPool));
 
     }
 
     public static void login(Context ctx, ConnectionPool connectionPool)
     {
-        // Hent form parametre
+
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
 
-        ctx.sessionAttribute("userEmail",email);
-
-        try
-        {
+        try {
             User user = UserMapper.login(email, password, connectionPool);
-            ctx.sessionAttribute("currentUser", user);
-            // Hvis ja, send videre til forsiden med login besked
-            ctx.attribute("message", "Du er nu logget ind");
-            ctx.render("homepage.html"); // skal render til vores main page
-        }
-        catch (DatabaseException e)
-        {
-            // Hvis nej, send tilbage til login side med fejl besked
-            ctx.attribute("message", e.getMessage() );
+            if (user != null) {
+                ctx.sessionAttribute("currentUser", user);
+                ctx.sessionAttribute("userEmail", email);
+                ctx.redirect("/loadcupcakes"); // Redirect to load cupcakes and then to the homepage
+            } else {
+                // Handle login failure
+                ctx.attribute("loginError", "Invalid username or password");
+                ctx.render("loginpage.html");
+            }
+        } catch (DatabaseException e) {
+            // Handle database error
+            ctx.attribute("loginError", "An error occurred. Please try again.");
             ctx.render("loginpage.html");
         }
-
     }
+
     private static void createUser(Context ctx, ConnectionPool connectionPool)
     {
         // Hent form parametre
@@ -54,13 +57,11 @@ public class UserController
         {
             try
             {
-                UserMapper.createuser(email, password1,0, "customer",connectionPool);
+                UserMapper.createuser(email, password1, 0, "customer", connectionPool);
                 ctx.attribute("message", "Du er hermed oprettet med brugernavn: " + email +
                         ". Nu skal du logge på.");
                 ctx.render("loginpage.html");
-            }
-
-            catch (DatabaseException e)
+            } catch (DatabaseException e)
             {
                 ctx.attribute("message", "Dit brugernavn findes allerede. Prøv igen, eller log ind");
                 ctx.render("createuser.html");

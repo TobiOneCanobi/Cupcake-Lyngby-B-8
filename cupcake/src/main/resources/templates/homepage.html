@@ -42,22 +42,20 @@
         <h1>Velkommen ombord</h1>
         <h3>Du har virkelig god smag! Vælg og bestil din cupcake her</h3>
 
-
         <br><br>
-
-        <form th:action="@{/order}" method="post">
+        <form method="get">
             <div>
                 <select name="Vælg bund">
                     <option value="" disabled selected>Vælg en bund</option>
                     <th:block th:each="bottom : ${bottoms}">
-                        <option th:value="${bottom.id}" th:text="${bottom.type}"></option>
+                        <option th:value="${bottom.bottomId}" th:text="${bottom.type}"></option>
                     </th:block>
                 </select>
 
                 <select name="Vælg topping">
                     <option value="" disabled selected>Vælg en topping</option>
                     <th:block th:each="topping : ${toppings}">
-                        <option th:value="${topping.id}" th:text="${topping.type}"></option>
+                        <option th:value="${topping.toppingId}" th:text="${topping.type}"></option>
                     </th:block>
                 </select>
 
@@ -69,8 +67,11 @@
                 </select>
 
                 <br><br>
-                <button type="submit" value="kurv">Læg i kurv</button>
+
             </div>
+        </form>
+        <form>
+            <button type="submit" value="kurv">Læg i kurv</button>
         </form>
     </div>
 

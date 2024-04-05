@@ -1,6 +1,7 @@
 package app;
 
 import app.config.ThymeleafConfig;
+import app.controllers.CupcakeController;
 import app.controllers.OrderController;
 import app.controllers.UserController;
 import app.entities.Order;
@@ -35,5 +36,6 @@ public class Main
         app.get("/", ctx ->  ctx.render("loginpage.html"));
         UserController.addRoutes(app, connectionPool);
         OrderController.addRoutes(app, connectionPool);
+        CupcakeController.addRoutes(app, connectionPool);
     }
 }
