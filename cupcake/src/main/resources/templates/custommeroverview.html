@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <title>adminoverview</title>
     <link rel="stylesheet" href="../public/css/style.css" th:href="@{css/style.css}"/>
-    <button class="webform" type="submit">Tilbage</button>
-    <div class="flex-container image-hover">
-        <div><a href="loginpage.html" th:href="@{/}">
-            <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}" width="100%"/>
-        </a>
+    <div class="container">
+        <button class="webform" type="submit" style="background: #327db2; max-height: 45px;">Tilbage</button>
+        <div class="flex-container">
+            <div><a href="loginpage.html" th:href="@{/}">
+                <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}" width="100%"/>
+            </a>
+            </div>
         </div>
     </div>
 </head>
@@ -16,12 +18,11 @@
 
 <br><br>
 
-<div class="usermail">
-    Logget ind som: <span class="text-margin" th:text="${session.userEmail}"></span>
-</div>
-
 <div class="webform center-two">
 
+    <div class="usermail">
+        Logget ind som: <span class="text-margin" th:text="${session.userEmail}"></span>
+    </div>
     <div class="center-text">
         <h1>Ordre bestilt af kunder</h1>
     </div>

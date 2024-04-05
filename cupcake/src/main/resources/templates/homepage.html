@@ -16,22 +16,19 @@
 </head>
 <body>
 
-<div class="usermail">
-    Logget ind som: <span th:text="${session.userEmail}"></span>
-</div>
-
 <div>
     <div class="webform center-text center-two">
+        <div class="usermail">
+            Logget ind som: <span th:text="${session.userEmail}"></span>
+        </div>
 
         <form th:action="@{/orderoverview}" method="get">
             <button class="text-margin" type="submit">Admin overblik</button>
         </form>
 
-        <!-- <a class="text-margin" href="url">Bruger email ></span></a> -->
-
-        Logget ind som: <span class="text-margin" th:text="${session.userEmail}"></span>
-
-        <a class="text-margin" href="url">Kunde overblik</a>
+        <form th:action="@{/orderoverviewcustommer}" method="get">
+            <button class="text-margin"  type="submit">Kunde overblik</button>
+        </form>
 
         <a href="shoppingcart.html" th:href="@{/}">
             <img src="../public/images/shoppingcartlogo.png" th:src="@{/images/shoppingcartlogo.png}" width="3%"/>
