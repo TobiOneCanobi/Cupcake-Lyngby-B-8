@@ -47,8 +47,21 @@ public class UserController
         String email = ctx.formParam("email");
         String password1 = ctx.formParam("password1");
         String password2 = ctx.formParam("password2");
+        if (!email.contains("@"))
+        {
+            ctx.attribute("message", "Din email skal indeholde '@'! Prøv igen.");
+            ctx.render("createuser.html");
+        }
 
-        if (password1.equals(password2))
+        if (!password1.equals(password2))
+        {
+            ctx.attribute("message", "Dine to passwords matcher ikke! Prøv igen");
+            ctx.render("createuser.html");
+        }
+        else if (!password1.matches(".*[A-Z].*") || password1.length() < 4)
+        {
+
+        } else if (password1.equals(password2))
         {
             try
             {
@@ -63,9 +76,10 @@ public class UserController
                 ctx.attribute("message", "Dit brugernavn findes allerede. Prøv igen, eller log ind");
                 ctx.render("createuser.html");
             }
-        } else
+        }
+        else
         {
-            ctx.attribute("message", "Dine to passwords matcher ikke! Prøv igen");
+            ctx.attribute("noget gik galt, PANIC!");
             ctx.render("createuser.html");
         }
     }
