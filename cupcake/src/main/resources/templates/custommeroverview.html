@@ -23,28 +23,28 @@
 <div class="webform center-two">
 
     <div class="center-text">
-    <h1>Ordre bestilt af kunder</h1>
+        <h1>Ordre bestilt af kunder</h1>
     </div>
 
     <form method="post">
         <table class="table">
             <thead>
             <tr>
-                <th>Order ID</th>
-                <th>User E-mail</th>
                 <th>Topping Type</th>
                 <th>Bottom Type</th>
                 <th>Quantity</th>
+                <th>Topping price</th>
+                <th>Bottom price</th>
                 <th>Price</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="order: ${orders}">
-                <td th:text="${order.orderId}"></td>
-                <td th:text="${order.userEmail}"></td>
+            <tr th:each="order: ${custommerorders}">
                 <td th:text="${order.toppingType}"></td>
                 <td th:text="${order.bottomType}"></td>
                 <td th:text="${order.quantity}"></td>
+                <td th:text="${order.toppingPrice}"></td>
+                <td th:text="${order.bottomPrice}"></td>
                 <td th:text="${order.totalPrice}"></td>
             </tr>
             </tbody>
