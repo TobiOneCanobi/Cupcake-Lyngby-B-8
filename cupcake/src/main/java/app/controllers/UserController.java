@@ -15,6 +15,7 @@ public class UserController
     public static void addRoutes(Javalin app, ConnectionPool connectionPool)
     {
         app.post("login", ctx -> login(ctx, connectionPool));
+        app.get("return", ctx -> ctx.render("loginpage.html"));
         app.get("logout", ctx -> logout(ctx));
         app.get("createuser", ctx -> ctx.render("createuser.html"));
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
@@ -73,14 +74,14 @@ public class UserController
             try
             {
                 UserMapper.createuser(email, password1,0, "customer",connectionPool);
-                ctx.attribute("message", "Du er hermed oprettet med brugernavn: " + email +
+                ctx.attribute("message", "Du er hermed oprettet med email: " + email +
                         ". Nu skal du logge på.");
                 ctx.render("loginpage.html");
             }
 
             catch (DatabaseException e)
             {
-                ctx.attribute("message", "Dit brugernavn findes allerede. Prøv igen, eller log ind");
+                ctx.attribute("message", "Dit email er allerede i brug. Prøv igen, eller log ind");
                 ctx.render("createuser.html");
             }
         }
