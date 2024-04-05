@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <title>adminoverview</title>
     <link rel="stylesheet" href="../public/css/style.css" th:href="@{css/style.css}"/>
-    <button class="webform" type="submit">Tilbage</button>
-    <div class="flex-container">
-        <div><a href="loginpage.html" th:href="@{/}">
-            <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}" width="100%"/>
-        </a>
+    <div class="container">
+        <button class="webform" type="submit" style="background: #327db2; max-height: 45px;">Tilbage</button>
+        <div class="flex-container">
+            <div><a href="loginpage.html" th:href="@{/}">
+                <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}" width="100%"/>
+            </a>
+            </div>
         </div>
     </div>
+
 </head>
 <body>
 
@@ -23,7 +26,7 @@
 <div class="webform center-two">
 
     <div class="center-text">
-        <h1>Ordre bestilt af kunder</h1>
+        <h1 style="font-family: Brush Script Std; font-weight: lighter; font-size: 40px;">Ordre bestilt af kunder</h1>
     </div>
 
     <table class="table">
@@ -33,8 +36,6 @@
             <th>Antal</th>
             <th>Pris</th>
             <th><img src="../public/images/logo.png" width="40" height="40"></th>
-
-
         </tr>
         <tr>
 
@@ -44,22 +45,28 @@
             <td>2</td>
             <td>40kr</td>
             <td>
-                <button type="submit" value="slet">Slet</button>
+                <button type="submit" style="background:indianred" value="slet">Slet</button>
             </td>
         </tr>
+
         <tr>
             <td>Itachi</td>
             <td>Bund: Vanilje, Topping: Chokolade</td>
             <td>4</td>
             <td>80kr</td>
-            <td><input type="submit" value="slet"></td>
+            <td>
+                <button type="submit" style="background:indianred" value="slet">Slet</button>
+            </td>
         </tr>
+
         <tr>
             <td>Kazuya</td>
             <td>Bund: Heihachi, Topping: Jin</td>
             <td>1</td>
             <td>20kr</td>
-            <td><input type="submit" value="slet"></td>
+            <td>
+                <button type="submit" style="background:indianred" value="slet">Slet</button>
+            </td>
         </tr>
     </table>
 
