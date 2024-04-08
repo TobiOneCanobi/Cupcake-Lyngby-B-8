@@ -43,7 +43,7 @@
         <h2 style="font-family: Brush Script Std; font-weight: lighter; font-size: 40px;">Velkommen ombord</h2>
         <h3>Du har virkelig god smag! Vælg og bestil din cupcake her</h3>
 
-        <form>
+        <form th:action="@{add-to-cart}" method="post">
             <div class="custom-select">
                 <select id="selectBottom" onchange="updateTotalPrice()">
                     <option value="" disabled selected>Vælg en bund</option>
@@ -73,10 +73,12 @@
                 </div>
 
             </div>
+            <button type="submit" value="shoppingcart" formaction="add-to-cart">Læg i kurv</button>
+          <!--  <p class="error" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></p> -->
         </form>
-        <form>
-            <button type="submit" value="kurv">Læg i kurv</button>
-        </form>
+
+
+
     </div>
 </div>
 
