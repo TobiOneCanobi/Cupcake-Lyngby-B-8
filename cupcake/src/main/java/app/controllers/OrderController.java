@@ -22,7 +22,7 @@ public class OrderController
         app.get("orderoverviewcustommer", ctx -> orderoverviewCustommer(ctx, connectionPool));
         app.post("totalPrice", ctx -> totalPrice(ctx, connectionPool));
         app.post("add-to-cart", ctx -> addToCart(ctx, connectionPool));
-        app.post("addorder", ctx -> addOrder(ctx, connectionPool));
+        app.post("placeorder", ctx -> placeOrder(ctx, connectionPool));  // Tilføjer rute for at placere ordre
 
     }
 
@@ -41,7 +41,6 @@ public class OrderController
         }
     }
 
-
     public static void orderoverviewCustommer(Context ctx, ConnectionPool connectionPool)
     {
         User user = ctx.sessionAttribute("currentUser");
@@ -59,7 +58,6 @@ public class OrderController
             ctx.render("custommeroverview.html");
         }
     }
-
 
     public static void addToCart (Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
@@ -107,51 +105,66 @@ public class OrderController
 
         total = (bottomPrice + toppingPrice) * quantity;
         ctx.attribute("total", total);
-//        return total;
 
     }
 
-
-    public static void addOrder(Context ctx, ConnectionPool connectionPool)
-    {
-        User user = ctx.sessionAttribute("currentUser");
-        try
-        {
-            Order order = OrderMapper.addOrder(user.getUserid(), connectionPool);
-            ctx.attribute("order", order);
-            addOrderline(ctx, connectionPool);
-            ctx.render("confirmation.html");
-        } catch (DatabaseException e)
-        {
-            ctx.attribute("message", "Noget gik galt. Prøv evt. igen");
-            ctx.render("confirmation.html");
-        }
+    public static int addOrder(int userId, ConnectionPool connectionPool) throws DatabaseException {
+        // Logic to add order to the database and return order ID
+        Order order = OrderMapper.addOrder(userId, connectionPool);
+        return order.getOrderId();
     }
 
-
-    public static void addOrderline(Context ctx, ConnectionPool connectionPool)
-    {
-        User user = ctx.sessionAttribute("currentUser");
-
-        int userId = user.getUserid();
-
+    public static void addOrderline(Context ctx, int orderId, ConnectionPool connectionPool) throws SQLException {
+        // Antager, at indkøbskurven er gemt som en liste af ShoppingCartLine objekter i sessionen
         List<ShoppingCartLine> shoppingCartLines = ctx.sessionAttribute("ShoppingCartLineList");
-        try {
-            int orderId = OrderMapper.createOrder(connectionPool, userId);
 
+        if (shoppingCartLines != null) {
             for (ShoppingCartLine line : shoppingCartLines) {
-                OrderMapper.createOrderLine(connectionPool, orderId, line);
+                // Her antages det, at OrderMapper har en metode til at tilføje en ordrelinje
+                OrderMapper.createOrderLine(connectionPool, orderId, line.getBottom().getBottomId(), line.getTopping().getToppingId(), line.getQuantity());
             }
-
-            // Optionally clear the shopping cart from the session after successful order creation
-             ctx.sessionAttribute("ShoppingCartLineList", null);
-            // Provide feedback to the user
-            ctx.attribute("message", "Your order has been successfully placed.");
-        } catch (SQLException e) {
-            ctx.attribute("message", "Error placing the order. Please try again.");
         }
+    }
 
+    public static void placeOrder(Context ctx, ConnectionPool connectionPool) {
+        User currentUser = ctx.sessionAttribute("currentUser");
+        int totalPrice = calculateTotalPrice(ctx);
+
+        if (currentUser.getBalance() >= totalPrice) {
+            try {
+                int updatedBalance = currentUser.getBalance() - totalPrice;
+                UserMapper.updateBalance(currentUser.getUserid(), updatedBalance, connectionPool);
+
+                int orderId = addOrder(currentUser.getUserid(), connectionPool); // Opretter en ordre og returnerer ID
+                addOrderline(ctx, orderId, connectionPool);
+
+                currentUser.setBalance(updatedBalance);
+                ctx.sessionAttribute("currentUser", currentUser);
+
+                ctx.attribute("orderId", orderId); // Til reference eller bekræftelse
+                ctx.render("confirmation.html");
+            } catch (DatabaseException | SQLException e) {
+                e.printStackTrace();
+                ctx.attribute("error", "Fejl ved opdatering af saldo eller oprettelse af ordre.");
+                ctx.render("shoppingcart.html");
+            }
+        } else {
+            ctx.attribute("error", "Ikke nok saldo til at gennemføre købet.");
+            ctx.render("shoppingcart.html");
+        }
     }
 
 
+    private static int calculateTotalPrice(Context ctx) {
+        List<ShoppingCartLine> shoppingCartLines = ctx.sessionAttribute("ShoppingCartLineList");
+        if (shoppingCartLines == null) {
+            return 0; // Ingen varer i kurven
+        }
+        int totalPrice = 0;
+        for (ShoppingCartLine line : shoppingCartLines) {
+            int lineTotal = line.getQuantity() * (line.getBottom().getPrice() + line.getTopping().getPrice());
+            totalPrice += lineTotal;
+        }
+        return totalPrice;
+    }
 }

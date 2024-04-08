@@ -151,17 +151,15 @@ public class OrderMapper
     }
 
 
-
-
-    public static void createOrderLine(ConnectionPool connectionPool, int orderId, ShoppingCartLine shoppingCartLine) throws SQLException {
+    public static void createOrderLine(ConnectionPool connectionPool, int orderId, int bottomId, int toppingId, int quantity) throws SQLException {
         String insertOrderLineSQL = "INSERT INTO public.orderline (order_id, bottom_id, topping_id, quantity) VALUES (?, ?, ?, ?);";
 
         try (Connection conn = connectionPool.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(insertOrderLineSQL)) {
             pstmt.setInt(1, orderId);
-            pstmt.setInt(2, shoppingCartLine.getBottom().getBottomId());
-            pstmt.setInt(3, shoppingCartLine.getTopping().getToppingId());
-            pstmt.setInt(4, shoppingCartLine.getQuantity());
+            pstmt.setInt(2, bottomId);
+            pstmt.setInt(3, toppingId);
+            pstmt.setInt(4, quantity);
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -169,8 +167,4 @@ public class OrderMapper
             throw e;
         }
     }
-
-
-
-
 }

@@ -88,25 +88,43 @@ public class UserMapper
         }
     }
 
-    public static void updateBalance(int userId, int balance, ConnectionPool connectionPool) throws DatabaseException
-    {
-        String sql = "update users set balance = ? where user_id = ?";
+    public static void updateBalance(int userId, int balance, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "UPDATE users SET balance = ? WHERE user_id = ?;";
 
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
-        )
-        {
-            ps.setInt(1, userId);
-            ps.setInt(2, balance);
+        ) {
+            ps.setInt(1, balance); // Første parameter er saldoen, der skal opdateres
+            ps.setInt(2, userId); // Anden parameter er brugerens id til WHERE-klausulen
+
             int rowsAffected = ps.executeUpdate();
-            if (rowsAffected != 1)
-            {
-                throw new DatabaseException("Fejl i opdatering af en task");
+            if (rowsAffected != 1) {
+                throw new SQLException("Opdatering af saldo fejlede, ingen rækker berørt.");
             }
-        } catch (SQLException e)
-        {
-            throw new DatabaseException("Fejl i opdatering af en task", e.getMessage());
+        } catch (SQLException e) {
+            // Log fejlen her, hvis du har en logningmekanisme
+            throw new DatabaseException("Fejl ved opdatering af saldo for bruger-ID: " + userId, e.getMessage());
         }
     }
+
+    public static int getBalance(int userId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT balance FROM users WHERE users_id = ?;";
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("balance");
+                } else {
+                    throw new DatabaseException("Bruger ikke fundet");
+                }
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Database fejl", e.getMessage());
+        }
+    }
+
+
+
 }

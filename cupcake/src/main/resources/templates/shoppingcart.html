@@ -51,7 +51,7 @@
     <div class="button-width">
         <a href="confirmation.html" th:href="@{confirmation}">
 
-            <form action="/addorder" method="post">
+            <form action="/placeorder" method="post">
                 <button type="submit">Place Order</button>
             </form>
 
@@ -61,8 +61,11 @@
 </div>
 
 <div class="container-set-bottom">
-    Logget ind som: <span th:text="${session.userEmail}"></span>
+    Logget ind som: <span th:text="${session.userEmail}"></span><br>
+    Saldo: <span th:text="${session.currentUser.balance}">0</span> kr.
 </div>
+
+
 
 
 </body>

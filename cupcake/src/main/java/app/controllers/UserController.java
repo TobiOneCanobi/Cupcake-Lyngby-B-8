@@ -1,8 +1,10 @@
 package app.controllers;
 
+import app.entities.Order;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
+import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -25,8 +27,23 @@ public class UserController
         app.get("shoppingcart", ctx -> ctx.render("shoppingcart.html"));
         app.get("confirmation", ctx -> ctx.render("confirmation.html"));
         app.get("/loadcupcakes", ctx -> loadBottomsAndToppings(ctx, connectionPool));
-
+        app.get("usersaldo", ctx -> loadUserSaldo(ctx, connectionPool));
     }
+
+    private static void loadUserSaldo(Context ctx, ConnectionPool connectionPool) {
+        try {
+            User user = ctx.sessionAttribute("currentUser");
+            int userId = user.getUserid();
+            int balance = UserMapper.getBalance(userId, connectionPool);
+
+            ctx.attribute("balance", balance);
+            ctx.render("shoppingcart.html");  // Erstat "your-template.html" med den faktiske HTML-fil, der skal vise saldoen
+        } catch (DatabaseException e) {
+            ctx.attribute("message", "Noget gik galt. Prøv evt. igen");
+            ctx.render("shoppingcart.html");  // Erstat "error-page.html" med din fejlsidetemplate
+        }
+    }
+
 
     public static void login(Context ctx, ConnectionPool connectionPool)
     {

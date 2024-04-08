@@ -20,7 +20,7 @@
     <div class="center-text">
 
         <h2 style="font-family: Brush Script Std; font-weight: lighter; font-size: 40px;">Tak for bestillingen</h2>
-        <h3>Der er trukket xx kroner fra din saldo</h3>
+        <h3>Der er trukket <span th:text="${totalPrice}">xx</span> kroner fra din saldo.</h3>
         <h4>Vi håber du nyder din ordre. <br> På gensyn.</h4>
         <a href="homepage.html" th:href="@{homepage}">
             <button class="button-width" type="submit">Bestil mere</button>
@@ -29,7 +29,8 @@
 </div>
 
 <div class="container-set-bottom">
-    Logget ind som: <span th:text="${session.userEmail}"></span>
+    Logget ind som: <span th:text="${session.userEmail}"></span><br>
+    Saldo: <span th:text="${session.currentUser.balance}">0</span> kr.
 </div>
 
 </body>
