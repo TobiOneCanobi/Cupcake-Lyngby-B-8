@@ -1,8 +1,9 @@
 package app.controllers;
 
-import app.entities.Order;
-import app.entities.User;
+import app.entities.*;
+import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
+import app.persistence.CupCakeMapper;
 import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
 import io.javalin.Javalin;
@@ -18,7 +19,7 @@ public class OrderController
         app.get("orderoverview", ctx -> orderoverview(ctx, connectionPool));
         app.get("orderoverviewcustommer", ctx -> orderoverviewCustommer(ctx, connectionPool));
         app.post("totalPrice", ctx -> totalPrice(ctx, connectionPool));
-        app.post("add-to-cart", ctx -> addToCart(ctx,connectionPool));
+        app.post("add-to-cart", ctx -> addToCart(ctx, connectionPool));
 
     }
 
@@ -56,25 +57,35 @@ public class OrderController
         }
     }
 
-    public static void addToCart(Context ctx, ConnectionPool connectionPool)
-    {
-        String toppingId = ctx.formParam("toppingId");
-        String bottomId = ctx.formParam("bottemId");
-       // int quantity = ctx.formParam("quantity");
-            User user = ctx.sessionAttribute("currentUser");
 
+    public static void addToCart (Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        try
+        {
+            // Parse form parameters
+            int bottomId = Integer.parseInt(ctx.formParam("bottomId"));
+            int toppingId = Integer.parseInt(ctx.formParam("toppingId"));
+            int quantity = Integer.parseInt(ctx.formParam("quantity"));
 
-        String email = ctx.formParam("email");
-        String password = ctx.formParam("password");
+            Bottom selectedBottom = CupCakeMapper.findBottomById(connectionPool, bottomId);
+            Topping selectedTopping = CupCakeMapper.findToppingById(connectionPool, toppingId);
 
+            ShoppingCartLine shoppingCartLine = new ShoppingCartLine(quantity, selectedBottom, selectedTopping);
+            ctx.sessionAttribute("newShoppingCartLine", shoppingCartLine);
+            ctx.attribute("message", "tilføjet "+ quantity + " cupcakes med bund: " + selectedBottom.getType() + " og top: " + selectedTopping.getType() + " for en total price af: " + shoppingCartLine.getTotal());
+            ctx.render("homepage.html");
 
-          //  User user = UserMapper.login(email, password, connectionPool);
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            ctx.attribute("message", "An error occurred while adding to cart. Please try again.");
+            ctx.render("homepage.html");
 
+        }
     }
 
 
-
-    public static void totalPrice(Context ctx, ConnectionPool connectionPool){
+    public static void totalPrice(Context ctx, ConnectionPool connectionPool)
+    {
 
         int bottomPrice = Integer.parseInt(ctx.formParam("bottomPrice"));
         int toppingPrice = Integer.parseInt(ctx.formParam("toppingPrice"));
@@ -86,11 +97,6 @@ public class OrderController
 //        return total;
 
     }
-
-
-
-
-
 
 
 }
