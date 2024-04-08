@@ -196,3 +196,13 @@ shoppingcart-logo-hover {
     filter: brightness(150%);
 }
 
+
+.box {
+    max-width: 200px;
+    padding: 0.675em 3em 0.675em 1em;
+    background-color: #327db2;
+    border: 1px solid #caced1;
+    border-radius: 0.25rem;
+    color: white;
+}
+
