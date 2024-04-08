@@ -1,12 +1,10 @@
 package app.persistence;
 
 import app.entities.Order;
+import app.entities.OrderLine;
 import app.exceptions.DatabaseException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,48 +102,66 @@ public class OrderMapper
     }
 
 
-//
-//    public static List<Order> loadOrdersCustomer(ConnectionPool connectionPool) throws DatabaseException
-//    {
-//        List<Order> listOfOrders = new ArrayList<>();
-//
-//        String sql = "SELECT \n" +
-//                "    ol.quantity,\n" +
-//                "    t.type AS topping_type,\n" +
-//                "    b.type AS bottom_type,\n" +
-//                "    t.price AS topping_price,\n" +
-//                "    b.price AS bottom_price,\n" +
-//                "    (t.price + b.price) * ol.quantity AS total_price\n" +
-//                "FROM \n" +
-//                "    public.orderline ol\n" +
-//                "JOIN \n" +
-//                "    public.topping t ON ol.topping_id = t.topping_id\n" +
-//                "JOIN \n" +
-//                "    public.bottom b ON ol.bottom_id = b.bottom_id";
-//
-//        try (Connection connection = connectionPool.getConnection();
-//             PreparedStatement ps = connection.prepareStatement(sql))
-//        {
-//            ResultSet rs = ps.executeQuery();
-//            while (rs.next())
-//            {
-//                String toppingType = rs.getString("topping_type");
-//                String bottomType = rs.getString("bottom_type");
-//                int quantity = rs.getInt("quantity");
-//                int toppingPrice = rs.getInt("topping_price");
-//                int bottomPrice = rs.getInt("bottom_price");
-//                int totalPrice = rs.getInt("total_price");
-//
-//                Order order = new Order(toppingType, bottomType, quantity, toppingPrice, bottomPrice, totalPrice);
-//                listOfOrders.add(order);
-//            }
-//        } catch (SQLException e)
-//        {
-//            e.printStackTrace();
-//            throw new DatabaseException("Fejl ved indlæsning af ordrer.", e.getMessage());
-//        }
-//        return listOfOrders;
-//    }
+
+    public static Order addOrder(int userId, ConnectionPool connectionPool) throws DatabaseException {
+        Order newOrder = null;
+
+        String sql = "INSERT INTO orders (user_id) VALUES (?)";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setInt(1, userId);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected == 1) {
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    int newOrderId = rs.getInt(1);
+                    newOrder = new Order(newOrderId, userId);
+                }
+            } else {
+                throw new DatabaseException("Error inserting order for user ID: " + userId);
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Database connection error", e.getMessage());
+        }
+        return newOrder;
+    }
+
+
+    public static OrderLine addOrderLine (int quantity, int toppingId, int bottomId, int orderId, ConnectionPool connectionPool) throws DatabaseException
+    {
+        OrderLine newOrderLine = null;
+
+        String sql = "INSERT INTO orderline (quantity, topping_id, bottom_id, order_id) VALUES (?, ?, ?, ?)";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setInt(1, quantity);
+            ps.setInt(2, toppingId);
+            ps.setInt(3, bottomId);
+            ps.setInt(4, orderId);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected == 1) {
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    int newId = rs.getInt(1);
+                    newOrderLine = new OrderLine(newId, quantity, toppingId, bottomId, orderId);
+                }
+            } else {
+                throw new DatabaseException("Error inserting orderline" + newOrderLine);
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Database connection error", e.getMessage());
+        }
+        return newOrderLine;
+    }
+
+
+
 
 
 }

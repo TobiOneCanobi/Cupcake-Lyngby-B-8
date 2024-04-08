@@ -21,6 +21,7 @@ public class OrderController
         app.get("orderoverviewcustommer", ctx -> orderoverviewCustommer(ctx, connectionPool));
         app.post("totalPrice", ctx -> totalPrice(ctx, connectionPool));
         app.post("add-to-cart", ctx -> addToCart(ctx, connectionPool));
+        app.post("addorder", ctx -> addOrder(ctx, connectionPool));
 
     }
 
@@ -107,6 +108,43 @@ public class OrderController
         ctx.attribute("total", total);
 //        return total;
 
+    }
+
+
+    public static void addOrder(Context ctx, ConnectionPool connectionPool)
+    {
+        User user = ctx.sessionAttribute("currentUser");
+        try
+        {
+            Order order = OrderMapper.addOrder(user.getUserid(), connectionPool);
+            ctx.attribute("order", order);
+            ctx.render("confirmation.html");
+        } catch (DatabaseException e)
+        {
+            ctx.attribute("message", "Noget gik galt. Prøv evt. igen");
+            ctx.render("confirmation.html");
+        }
+    }
+
+
+    public static void addOrderline(Context ctx, ConnectionPool connectionPool)
+    {
+
+
+
+        try
+        {
+            OrderLine orderLine = OrderMapper.addOrderLine();
+
+            ctx.attribute("order", order);
+
+
+            ctx.render("confirmation.html");
+        } catch (DatabaseException e)
+        {
+            ctx.attribute("message", "Noget gik galt. Prøv evt. igen");
+            ctx.render("confirmation.html");
+        }
     }
 
 

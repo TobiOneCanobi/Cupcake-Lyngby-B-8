@@ -3,12 +3,13 @@ package app.entities;
 public class OrderLine
 {
     private int orderLineId;
+    private int quantity;
     private int toppingId;
     private int bottomId;
     private int orderId;
-    private int quantity;
 
-    public OrderLine(int orderLineId, int toppingId, int bottomId, int orderId, int quantity)
+
+    public OrderLine(int orderLineId,int quantity, int toppingId, int bottomId, int orderId)
     {
         this.orderLineId = orderLineId;
         this.toppingId = toppingId;
