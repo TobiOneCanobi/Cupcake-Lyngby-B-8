@@ -9,6 +9,7 @@ import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,6 +119,7 @@ public class OrderController
         {
             Order order = OrderMapper.addOrder(user.getUserid(), connectionPool);
             ctx.attribute("order", order);
+            addOrderline(ctx, connectionPool);
             ctx.render("confirmation.html");
         } catch (DatabaseException e)
         {
@@ -129,22 +131,26 @@ public class OrderController
 
     public static void addOrderline(Context ctx, ConnectionPool connectionPool)
     {
+        User user = ctx.sessionAttribute("currentUser");
 
+        int userId = user.getUserid();
 
+        List<ShoppingCartLine> shoppingCartLines = ctx.sessionAttribute("ShoppingCartLineList");
+        try {
+            int orderId = OrderMapper.createOrder(connectionPool, userId);
 
-        try
-        {
-            OrderLine orderLine = OrderMapper.addOrderLine();
+            for (ShoppingCartLine line : shoppingCartLines) {
+                OrderMapper.createOrderLine(connectionPool, orderId, line);
+            }
 
-            ctx.attribute("order", order);
-
-
-            ctx.render("confirmation.html");
-        } catch (DatabaseException e)
-        {
-            ctx.attribute("message", "Noget gik galt. Prøv evt. igen");
-            ctx.render("confirmation.html");
+            // Optionally clear the shopping cart from the session after successful order creation
+             ctx.sessionAttribute("ShoppingCartLineList", null);
+            // Provide feedback to the user
+            ctx.attribute("message", "Your order has been successfully placed.");
+        } catch (SQLException e) {
+            ctx.attribute("message", "Error placing the order. Please try again.");
         }
+
     }
 
 

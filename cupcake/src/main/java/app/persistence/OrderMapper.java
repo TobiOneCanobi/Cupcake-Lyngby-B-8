@@ -2,6 +2,7 @@ package app.persistence;
 
 import app.entities.Order;
 import app.entities.OrderLine;
+import app.entities.ShoppingCartLine;
 import app.exceptions.DatabaseException;
 
 import java.sql.*;
@@ -129,37 +130,45 @@ public class OrderMapper
         return newOrder;
     }
 
+    public static int createOrder(ConnectionPool connectionPool, int userId) throws SQLException {
+        String insertOrderSQL = "INSERT INTO public.orders (user_id) VALUES (?) RETURNING order_id;";
+        int orderId = -1;
 
-    public static OrderLine addOrderLine (int quantity, int toppingId, int bottomId, int orderId, ConnectionPool connectionPool) throws DatabaseException
-    {
-        OrderLine newOrderLine = null;
+        try (Connection conn = connectionPool.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(insertOrderSQL)) {
+            pstmt.setInt(1, userId);
 
-        String sql = "INSERT INTO orderline (quantity, topping_id, bottom_id, order_id) VALUES (?, ?, ?, ?)";
-
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-            ps.setInt(1, quantity);
-            ps.setInt(2, toppingId);
-            ps.setInt(3, bottomId);
-            ps.setInt(4, orderId);
-
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected == 1) {
-                ResultSet rs = ps.getGeneratedKeys();
-                if (rs.next()) {
-                    int newId = rs.getInt(1);
-                    newOrderLine = new OrderLine(newId, quantity, toppingId, bottomId, orderId);
-                }
-            } else {
-                throw new DatabaseException("Error inserting orderline" + newOrderLine);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                orderId = rs.getInt(1);
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Database connection error", e.getMessage());
+            e.printStackTrace();
+            throw e;
         }
-        return newOrderLine;
+
+        return orderId;
     }
 
+
+
+
+    public static void createOrderLine(ConnectionPool connectionPool, int orderId, ShoppingCartLine shoppingCartLine) throws SQLException {
+        String insertOrderLineSQL = "INSERT INTO public.orderline (order_id, bottom_id, topping_id, quantity) VALUES (?, ?, ?, ?);";
+
+        try (Connection conn = connectionPool.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(insertOrderLineSQL)) {
+            pstmt.setInt(1, orderId);
+            pstmt.setInt(2, shoppingCartLine.getBottom().getBottomId());
+            pstmt.setInt(3, shoppingCartLine.getTopping().getToppingId());
+            pstmt.setInt(4, shoppingCartLine.getQuantity());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
 
 
 
