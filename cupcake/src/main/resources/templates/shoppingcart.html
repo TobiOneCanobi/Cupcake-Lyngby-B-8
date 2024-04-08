@@ -58,7 +58,11 @@
 
     <div class="button-width">
         <a href="confirmation.html" th:href="@{confirmation}">
-            <button type="submit" style="">Bestil</button>
+
+            <form action="/addorder" method="post">
+                <button type="submit">Place Order</button>
+            </form>
+
         </a>
     </div>
 

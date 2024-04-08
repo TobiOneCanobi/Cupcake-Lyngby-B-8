@@ -5,7 +5,6 @@ import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.CupCakeMapper;
 import app.persistence.OrderMapper;
-import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
@@ -20,6 +19,7 @@ public class OrderController
         app.get("orderoverviewcustommer", ctx -> orderoverviewCustommer(ctx, connectionPool));
         app.post("totalPrice", ctx -> totalPrice(ctx, connectionPool));
         app.post("add-to-cart", ctx -> addToCart(ctx, connectionPool));
+        app.post("addorder", ctx -> addOrder(ctx, connectionPool));
 
     }
 
@@ -58,7 +58,8 @@ public class OrderController
     }
 
 
-    public static void addToCart (Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    public static void addToCart(Context ctx, ConnectionPool connectionPool) throws DatabaseException
+    {
         try
         {
             // Parse form parameters
@@ -71,7 +72,7 @@ public class OrderController
 
             ShoppingCartLine shoppingCartLine = new ShoppingCartLine(quantity, selectedBottom, selectedTopping);
             ctx.sessionAttribute("newShoppingCartLine", shoppingCartLine);
-            ctx.attribute("message", "tilføjet "+ quantity + " cupcakes med bund: " + selectedBottom.getType() + " og top: " + selectedTopping.getType() + " for en total price af: " + shoppingCartLine.getTotal());
+            ctx.attribute("message", "tilføjet " + quantity + " cupcakes med bund: " + selectedBottom.getType() + " og top: " + selectedTopping.getType() + " for en total price af: " + shoppingCartLine.getTotal());
             ctx.render("homepage.html");
 
         } catch (Exception e)
@@ -96,6 +97,43 @@ public class OrderController
         ctx.attribute("total", total);
 //        return total;
 
+    }
+
+
+    public static void addOrder(Context ctx, ConnectionPool connectionPool)
+    {
+        User user = ctx.sessionAttribute("currentUser");
+        try
+        {
+            Order order = OrderMapper.addOrder(user.getUserid(), connectionPool);
+            ctx.attribute("order", order);
+            ctx.render("confirmation.html");
+        } catch (DatabaseException e)
+        {
+            ctx.attribute("message", "Noget gik galt. Prøv evt. igen");
+            ctx.render("confirmation.html");
+        }
+    }
+
+
+    public static void addOrderline(Context ctx, ConnectionPool connectionPool)
+    {
+
+
+
+        try
+        {
+            OrderLine orderLine = OrderMapper.addOrderLine();
+
+            ctx.attribute("order", order);
+
+
+            ctx.render("confirmation.html");
+        } catch (DatabaseException e)
+        {
+            ctx.attribute("message", "Noget gik galt. Prøv evt. igen");
+            ctx.render("confirmation.html");
+        }
     }
 
 
