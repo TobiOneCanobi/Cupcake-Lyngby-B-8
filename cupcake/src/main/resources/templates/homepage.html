@@ -5,22 +5,25 @@
     <title>homepage</title>
     <link rel="stylesheet" href="../public/css/style.css" th:href="@{css/style.css}"/>
 
-    <form th:action="@{/logout}" method="get">
-        <button class="webform" type="submit" style="background: indianred; max-height: 45px;">Log af</button>
-    </form>
+    <div class="container">
+        <form th:action="@{/logout}" method="get">
+            <button class="webform" type="submit" style="background: indianred; max-height: 45px;">Log af</button>
+        </form>
 
-    <div class="flex-container image-hover">
-        <div><a href="loginpage.html" th:href="@{/}">
-            <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}" width="100%"/>
-        </a>
+        <div class="container-logo">
+            <div><a href="loginpage.html" th:href="@{/}">
+                <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}" width="65%"/>
+            </a>
+            </div>
         </div>
+        <a>l</a>
     </div>
+
 </head>
 <body>
 
-<div>
-    <div class="webform center-text center-two">
-
+<div class="webform center-two">
+    <div class="container-alignment center">
         <div th:if="${session.userRole == 'admin'}">
             <form th:action="@{/orderoverview}" method="get">
                 <button class="text-margin" type="submit">Admin overblik</button>
@@ -31,11 +34,12 @@
             <button class="text-margin" type="submit">Kunde overblik</button>
         </form>
 
-        <a href="shoppingcart.html" th:href="@{shoppingcart}">
-            <img class="shoppingcart-logo-hover" src="../public/images/shoppingcartlogo.png"
-                 th:src="@{/images/shoppingcartlogo.png}" width="15%"/>
-        </a>
+        <img class="shoppingcart-logo-hover" src="../public/images/shoppingcartlogo.png" href="shoppingcart.html"
+             th:href="@{shoppingcart}"
+             th:src="@{/images/shoppingcartlogo.png}" width="8%" height="8%"/>
     </div>
+</div>
+
 </div>
 <br>
 <div class="webform center-two">
@@ -80,7 +84,7 @@
     </div>
 </div>
 
-<div>
+<div class="container-set-bottom">
     Logget ind som: <span th:text="${session.userEmail}"></span>
 </div>
 

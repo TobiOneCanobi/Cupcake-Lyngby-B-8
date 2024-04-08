@@ -202,10 +202,19 @@ shoppingcart-logo-hover {
     justify-content: space-between;
 }
 
-.item-1 {
+.container-button {
     align-items: flex-start;
 }
 
-.item-2 {
+.container-logo {
     margin-left: 235px;
+}
+
+.container-alignment {
+    display: flex;
+    flex-direction: row;
+}
+
+.container-set-bottom {
+    position: absolute; bottom: 5px;
 }
