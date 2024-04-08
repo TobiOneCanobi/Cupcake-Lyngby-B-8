@@ -37,7 +37,7 @@
             <a th:if="${session.currentUser != null}" href="loginpage.html" th:href="@{/logout}">Logout</a>
             <span th:if="${session.currentUser != null}"> | </span>
             <form th:action="@{/createuser}" method="get">
-                <button type="submit">opret bruger</button>
+                <button type="submit">Opret bruger</button>
             </form>
         </div>
     </div>

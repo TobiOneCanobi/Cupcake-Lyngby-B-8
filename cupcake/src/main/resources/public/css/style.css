@@ -213,6 +213,8 @@ shoppingcart-logo-hover {
 .container-alignment {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+
 }
 
 .container-set-bottom {
