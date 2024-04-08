@@ -2,15 +2,49 @@ package app.entities;
 
 public class ShoppingCartLine
 {
-
-    private int bottomId = 0;
-    private String bottomType;
-    private int bottomPrice = 0;
-
-    private int toppingId = 0;
-    private String toppingType;
-    private int toppingPrice = 0;
-
     private int quantity = 0;
 
+    private Bottom bottom;
+
+    private Topping topping;
+
+    private int Total = 0;
+
+    public ShoppingCartLine(int quantity, Bottom bottom, Topping topping)
+    {
+        this.quantity = quantity;
+        this.bottom = bottom;
+        this.topping = topping;
+    }
+
+    public int getQuantity()
+    {
+        return quantity;
+    }
+
+    public int getTotal()
+    {
+        Total = ((topping.getPrice()+bottom.getPrice())*quantity);
+        return Total;
+    }
+
+    public Bottom getBottom()
+    {
+        return bottom;
+    }
+
+    public Topping getTopping()
+    {
+        return topping;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "ShoppingCartLine{" +
+                "quantity=" + quantity +
+                ", bottom=" + bottom +
+                ", topping=" + topping +
+                '}';
+    }
 }

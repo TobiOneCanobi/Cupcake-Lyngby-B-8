@@ -49,14 +49,14 @@
 
         <form th:action="@{add-to-cart}" method="post">
             <div class="custom-select">
-                <select id="selectBottom" onchange="updateTotalPrice()">
+                <select id="selectBottom" name="bottomId" onchange="updateTotalPrice()">
                     <option value="" disabled selected>Vælg en bund</option>
                     <th:block th:each="bottom : ${session.bottoms}">
                         <option th:value="${bottom.bottomId}" th:data-price="${bottom.price}" th:text="${bottom.type} + ' - ' + ${bottom.price} + ' Kr.'"></option>
                     </th:block>
                 </select>
 
-                <select id="selectTopping" onchange="updateTotalPrice()">
+                <select id="selectTopping" name="toppingId" onchange="updateTotalPrice()">
                     <option value="" disabled selected>Vælg en topping</option>
                     <th:block th:each="topping : ${session.toppings}">
                         <option th:value="${topping.toppingId}" th:data-price="${topping.price}" th:text="${topping.type} + ' - ' + ${topping.price} + ' Kr.'"></option>
@@ -64,8 +64,8 @@
                 </select>
 
 
-                <select id="selectQuantity" onchange="updateTotalPrice()">
-                    <option value="" disabled selected>Vælg antal</option>
+                <select id="selectQuantity" name="quantity" onchange="updateTotalPrice()">
+                    <option value="" type="number" disabled selected>Vælg antal</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -78,7 +78,8 @@
 
             </div>
             <button type="submit" value="shoppingcart" formaction="add-to-cart">Læg i kurv</button>
-          <!--  <p class="error" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></p> -->
+            <div th:if="${message}" th:text="${message}"></div>
+
         </form>
 
 
