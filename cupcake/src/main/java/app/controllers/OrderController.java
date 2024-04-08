@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.entities.Order;
+import app.entities.User;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
 import io.javalin.Javalin;
@@ -37,9 +38,12 @@ public class OrderController
 
     public static void orderoverviewCustommer(Context ctx, ConnectionPool connectionPool)
     {
+        User user = ctx.sessionAttribute("currentUser");
+
         try
         {
-            List<Order> orderListCustommer = OrderMapper.loadOrdersCustomer(connectionPool);
+            int userId = user.getUserid();
+            List<Order> orderListCustommer = OrderMapper.loadOrdersCustomer(connectionPool, userId);
             ctx.attribute("custommerorders", orderListCustommer);
             ctx.render("custommeroverview.html");
         } catch (Exception e)
