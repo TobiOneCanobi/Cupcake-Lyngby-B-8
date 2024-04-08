@@ -9,6 +9,7 @@ import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderController
@@ -59,6 +60,7 @@ public class OrderController
 
 
     public static void addToCart (Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+
         try
         {
             // Parse form parameters
@@ -70,7 +72,16 @@ public class OrderController
             Topping selectedTopping = CupCakeMapper.findToppingById(connectionPool, toppingId);
 
             ShoppingCartLine shoppingCartLine = new ShoppingCartLine(quantity, selectedBottom, selectedTopping);
-            ctx.sessionAttribute("newShoppingCartLine", shoppingCartLine);
+            List<ShoppingCartLine> shoppingCartLineList = ctx.sessionAttribute("ShoppingCartLineList");
+
+            if (shoppingCartLineList == null) {
+                shoppingCartLineList = new ArrayList<>();
+            }
+
+            shoppingCartLineList.add(shoppingCartLine);
+
+            ctx.sessionAttribute("ShoppingCartLineList", shoppingCartLineList);
+
             ctx.attribute("message", "tilføjet "+ quantity + " cupcakes med bund: " + selectedBottom.getType() + " og top: " + selectedTopping.getType() + " for en total price af: " + shoppingCartLine.getTotal());
             ctx.render("homepage.html");
 

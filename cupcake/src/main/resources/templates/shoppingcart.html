@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -21,40 +21,32 @@
 <body>
 
 
-
 <div class="webform center-two ">
     <div class="center">
         <h1>Din indkøbskurv</h1>
     </div>
 
-    <table class="table">
-        <tr>
-            <th>Nummer</th>
-            <th>Cupcake</th>
-            <th>Antal</th>
-            <th>Pris</th>
-        </tr>
-        <tr>
+    <form method="post">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>cupcake bund</th>
+                <th>cupcake top</th>
+                <th>antal</th>
+                <th>total pris</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="shoppingcartline : ${session.ShoppingCartLineList}">
+                <td th:text="${shoppingcartline.bottom.type}"></td>
+                <td th:text="${shoppingcartline.topping.type}"></td>
+                <td th:text="${shoppingcartline.quantity}"></td>
+                <td th:text="${shoppingcartline.total}"></td>
+            </tr>
 
-        <tr>
-            <td>1</td>
-            <td>Bund: Vanilje, Topping: Chokolade</td>
-            <td>2</td>
-            <td>40kr</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Bund: Vanilje, Topping: Chokolade</td>
-            <td>2</td>
-            <td>40kr</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Bund: Vanilje, Topping: Chokolade</td>
-            <td>2</td>
-            <td>40kr</td>
-        </tr>
-    </table>
+            </tbody>
+        </table>
+    </form>
 
     <div class="button-width">
         <a href="confirmation.html" th:href="@{confirmation}">

@@ -8,7 +8,7 @@ public class ShoppingCartLine
 
     private Topping topping;
 
-    private int Total = 0;
+    private int total = 0;
 
     public ShoppingCartLine(int quantity, Bottom bottom, Topping topping)
     {
@@ -24,8 +24,8 @@ public class ShoppingCartLine
 
     public int getTotal()
     {
-        Total = ((topping.getPrice()+bottom.getPrice())*quantity);
-        return Total;
+        total = ((topping.getPrice()+bottom.getPrice())*quantity);
+        return total;
     }
 
     public Bottom getBottom()
