@@ -47,14 +47,14 @@
             <div class="custom-select">
                 <select id="selectBottom" onchange="updateTotalPrice()">
                     <option value="" disabled selected>Vælg en bund</option>
-                    <th:block th:each="bottom : ${bottoms}">
+                    <th:block th:each="bottom : ${session.bottoms}">
                         <option th:value="${bottom.bottomId}" th:data-price="${bottom.price}" th:text="${bottom.type} + ' - ' + ${bottom.price} + ' Kr.'"></option>
                     </th:block>
                 </select>
 
                 <select id="selectTopping" onchange="updateTotalPrice()">
                     <option value="" disabled selected>Vælg en topping</option>
-                    <th:block th:each="topping : ${toppings}">
+                    <th:block th:each="topping : ${session.toppings}">
                         <option th:value="${topping.toppingId}" th:data-price="${topping.price}" th:text="${topping.type} + ' - ' + ${topping.price} + ' Kr.'"></option>
                     </th:block>
                 </select>

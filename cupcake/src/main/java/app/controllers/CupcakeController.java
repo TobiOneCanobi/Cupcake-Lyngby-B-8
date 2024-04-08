@@ -27,8 +27,8 @@ public class CupcakeController
             List<Topping> toppinglist = CupCakeMapper.loadToppings(connectionPool);
 
 
-            ctx.attribute("bottoms", bottomlist);
-            ctx.attribute("toppings", toppinglist);
+            ctx.sessionAttribute("bottoms", bottomlist);
+            ctx.sessionAttribute("toppings", toppinglist);
             ctx.render("homepage.html");
         } catch (Exception e)
         {
