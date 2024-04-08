@@ -161,12 +161,11 @@ button[type=submit]:hover {
 }
 
 .usermail {
-    background-color: #d9cdcd;
     min-width: auto;
     max-width: fit-content;
     min-height: auto;
     padding: 10px 20px;
-    border-radius: 20px;
+
 }
 
 select {
