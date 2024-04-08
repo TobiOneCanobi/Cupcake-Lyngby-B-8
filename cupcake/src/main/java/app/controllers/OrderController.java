@@ -4,6 +4,7 @@ import app.entities.Order;
 import app.entities.User;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
+import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
@@ -17,6 +18,7 @@ public class OrderController
         app.get("orderoverview", ctx -> orderoverview(ctx, connectionPool));
         app.get("orderoverviewcustommer", ctx -> orderoverviewCustommer(ctx, connectionPool));
         app.post("totalPrice", ctx -> totalPrice(ctx, connectionPool));
+        app.post("add-to-cart", ctx -> addToCart(ctx,connectionPool));
 
     }
 
@@ -52,6 +54,22 @@ public class OrderController
             e.printStackTrace();
             ctx.render("custommeroverview.html");
         }
+    }
+
+    public static void addToCart(Context ctx, ConnectionPool connectionPool)
+    {
+        String toppingId = ctx.formParam("toppingId");
+        String bottomId = ctx.formParam("bottemId");
+       // int quantity = ctx.formParam("quantity");
+            User user = ctx.sessionAttribute("currentUser");
+
+
+        String email = ctx.formParam("email");
+        String password = ctx.formParam("password");
+
+
+          //  User user = UserMapper.login(email, password, connectionPool);
+
     }
 
 
