@@ -216,5 +216,5 @@ shoppingcart-logo-hover {
 }
 
 .container-set-bottom {
-    position: absolute; bottom: 5px;
+    position: fixed; bottom: 5px;
 }
