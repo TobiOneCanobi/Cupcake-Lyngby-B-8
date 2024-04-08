@@ -43,30 +43,35 @@
         <h2 style="font-family: Brush Script Std; font-weight: lighter; font-size: 40px;">Velkommen ombord</h2>
         <h3>Du har virkelig god smag! Vælg og bestil din cupcake her</h3>
 
-        <br><br>
-        <form method="get">
+        <form>
             <div class="custom-select">
-                <select name="Vælg bund">
+                <select id="selectBottom" onchange="updateTotalPrice()">
                     <option value="" disabled selected>Vælg en bund</option>
                     <th:block th:each="bottom : ${bottoms}">
-                        <option th:value="${bottom.bottomId}" th:text="${bottom.type}"></option>
+                        <option th:value="${bottom.bottomId}" th:data-price="${bottom.price}" th:text="${bottom.type} + ' - ' + ${bottom.price} + ' Kr.'"></option>
                     </th:block>
                 </select>
 
-                <select name="Vælg topping">
+                <select id="selectTopping" onchange="updateTotalPrice()">
                     <option value="" disabled selected>Vælg en topping</option>
                     <th:block th:each="topping : ${toppings}">
-                        <option th:value="${topping.toppingId}" th:text="${topping.type}"></option>
+                        <option th:value="${topping.toppingId}" th:data-price="${topping.price}" th:text="${topping.type} + ' - ' + ${topping.price} + ' Kr.'"></option>
                     </th:block>
                 </select>
 
-                <select name="Vælg antal">
+
+                <select id="selectQuantity" onchange="updateTotalPrice()">
                     <option value="" disabled selected>Vælg antal</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                 </select>
-                <br><br>
+
+                <div class="box center-two">
+                    <input type="number" id="totalPrice" name="result" readonly th:value="${total}">
+                    <span id="currencyLabel">Kr.</span>
+                </div>
+
             </div>
         </form>
         <form>
@@ -78,6 +83,21 @@
 <div>
     Logget ind som: <span th:text="${session.userEmail}"></span>
 </div>
+
+<script>
+    function updateTotalPrice() {
+        const bottomSelect = document.getElementById('selectBottom');
+        const toppingSelect = document.getElementById('selectTopping');
+        const quantitySelect = document.getElementById('selectQuantity');
+
+        const bottomPrice = bottomSelect.options[bottomSelect.selectedIndex].dataset.price;
+        const toppingPrice = toppingSelect.options[toppingSelect.selectedIndex].dataset.price;
+        const quantity = quantitySelect.value;
+
+        const total = (parseInt(bottomPrice, 10) + parseInt(toppingPrice, 10)) * parseInt(quantity, 10);
+        document.getElementById('totalPrice').value = total;
+    }
+</script>
 
 </body>
 </html>
