@@ -149,14 +149,7 @@ button[type=submit]:hover {
     background-color: silver;
 }
 
-.usermail {
-    background-color: transparent;
-    min-width: auto;
-    max-width: fit-content;
-    min-height: auto;
-    padding: 10px 20px;
-    border-radius: 20px;
-}
+
 
 select {
     max-width: 200px;

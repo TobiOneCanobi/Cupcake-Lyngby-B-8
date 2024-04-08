@@ -41,6 +41,9 @@ public class UserController
             {
                 ctx.sessionAttribute("currentUser", user);
                 ctx.sessionAttribute("userEmail", email);
+
+                ctx.sessionAttribute("userRole", user.getRole());
+
                 ctx.redirect("/loadcupcakes"); // Redirect to load cupcakes and then to the homepage
             } else
             {
