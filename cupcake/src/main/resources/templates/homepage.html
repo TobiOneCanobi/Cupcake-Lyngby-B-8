@@ -34,9 +34,12 @@
             <button class="text-margin" type="submit">Kunde overblik</button>
         </form>
 
-        <img class="shoppingcart-logo-hover" src="../public/images/shoppingcartlogo.png" href="shoppingcart.html"
-             th:href="@{shoppingcart}"
-             th:src="@{/images/shoppingcartlogo.png}" width="8%" height="8%"/>
+        <a href="shoppingcart.html" th:href="@{shoppingcart}">
+            <img class="shoppingcart-logo-hover" src="../public/images/shoppingcartlogo.png"
+                 th:src="@{/images/shoppingcartlogo.png}" width="15%"/>
+        </a>
+
+
     </div>
 </div>
 
