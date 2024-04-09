@@ -48,6 +48,11 @@
         </table>
     </form>
 
+        <div class="button-width">
+            <button type="submit" formaction="/placeorder">Køb</button>
+            <div th:if="${message}" th:text="${message}"></div>
+            </a>
+        </div>
 
     <div class="button-width">
         <h3>Dit totale beløb er: <span th:text="${totalPrice}">xx</span> kroner.</h3>
@@ -62,6 +67,9 @@
 
         </a>
     </div>
+
+    </form>
+
 
 </div>
 
