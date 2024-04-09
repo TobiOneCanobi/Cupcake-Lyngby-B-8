@@ -23,7 +23,6 @@ public class OrderController
         app.post("totalPrice", ctx -> totalPrice(ctx, connectionPool));
         app.post("add-to-cart", ctx -> addToCart(ctx, connectionPool));
         app.post("placeorder", ctx -> placeOrder(ctx, connectionPool));  // Tilføjer rute for at placere ordre
-
     }
 
     public static void orderoverview(Context ctx, ConnectionPool connectionPool)
@@ -59,11 +58,11 @@ public class OrderController
         }
     }
 
+
     public static void addToCart (Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
         try
         {
-            // Parse form parameters
             int bottomId = Integer.parseInt(ctx.formParam("bottomId"));
             int toppingId = Integer.parseInt(ctx.formParam("toppingId"));
             int quantity = Integer.parseInt(ctx.formParam("quantity"));
@@ -141,6 +140,8 @@ public class OrderController
                 currentUser.setBalance(updatedBalance);
                 ctx.sessionAttribute("currentUser", currentUser);
 
+                ctx.attribute("totalPrice", totalPrice);
+
                 ctx.attribute("orderId", orderId); // Til reference eller bekræftelse
                 ctx.render("confirmation.html");
             } catch (DatabaseException | SQLException e) {
@@ -155,7 +156,7 @@ public class OrderController
     }
 
 
-    private static int calculateTotalPrice(Context ctx) {
+    public static int calculateTotalPrice(Context ctx) {
         List<ShoppingCartLine> shoppingCartLines = ctx.sessionAttribute("ShoppingCartLineList");
         if (shoppingCartLines == null) {
             return 0; // Ingen varer i kurven
@@ -167,4 +168,5 @@ public class OrderController
         }
         return totalPrice;
     }
+
 }

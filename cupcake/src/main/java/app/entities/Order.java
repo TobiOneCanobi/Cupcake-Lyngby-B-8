@@ -21,7 +21,6 @@ public class Order
     public Order(int orderId, String userEmail, String toppingType, String bottomType, int quantity, int totalPrice)
     {
         this.orderId = orderId;
-        this.userId = userId;
         this.userEmail = userEmail;
         this.toppingType = toppingType;
         this.bottomType = bottomType;
