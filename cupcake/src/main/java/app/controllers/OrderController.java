@@ -145,11 +145,11 @@ public class OrderController
                 ctx.render("confirmation.html");
             } catch (DatabaseException | SQLException e) {
                 e.printStackTrace();
-                ctx.attribute("error", "Fejl ved opdatering af saldo eller oprettelse af ordre.");
+                ctx.attribute("message", "Fejl ved opdatering af saldo eller oprettelse af ordre.");
                 ctx.render("shoppingcart.html");
             }
         } else {
-            ctx.attribute("error", "Ikke nok saldo til at gennemføre købet.");
+            ctx.attribute("message", "Ikke nok saldo til at gennemføre købet.");
             ctx.render("shoppingcart.html");
         }
     }
