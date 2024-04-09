@@ -46,29 +46,18 @@
 
             </tbody>
         </table>
-    </form>
 
         <div class="button-width">
             <button type="submit" formaction="/placeorder">Køb</button>
             <div th:if="${message}" th:text="${message}"></div>
             </a>
         </div>
+    </form>
+
 
     <div class="button-width">
         <h3>Dit totale beløb er: <span th:text="${totalPrice}">xx</span> kroner.</h3>
     </div>
-
-    <div class="button-width">
-        <a href="confirmation.html" th:href="@{confirmation}">
-
-            <form action="/placeorder" method="post">
-                <button type="submit">Place Order</button>
-            </form>
-
-        </a>
-    </div>
-
-    </form>
 
 
 </div>
@@ -77,8 +66,6 @@
     Logget ind som: <span th:text="${session.userEmail}"></span><br>
     Saldo: <span th:text="${session.currentUser.balance}">0</span> kr.
 </div>
-
-
 
 
 </body>
