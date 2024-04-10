@@ -1,0 +1,51 @@
+@startuml
+skinparam backgroundColor #EEF2F3
+skinparam swimlaneBorderColor #d3c9b7
+
+|Kunde|
+start
+:Besøg hjemmesiden;
+
+|Website|
+if ("Er logget ind?") then (ja)
+else (nej)
+  :Opret bruger;
+  :Log ind;
+endif
+|Kunde|
+:Homepage;
+
+|Kunde|
+:Design cupcake;
+:Tilføj til kurv;
+
+|Website|
+:Opdater kurv;
+
+|Kunde|
+:Gå til kurv;
+:Se kurv;
+
+if ("Køb cupcakes?") then (ja)
+  :Tryk 'Køb';
+  :Vis bekræftelsesside;
+
+  if ("Bestil mere?") then (ja)
+    -Homepage
+  else (nej)
+    :Log af;
+    stop
+  endif
+else (nej)
+  if ("Se tidligere ordrer?") then (ja)
+    :Vis tidligere ordrer;
+    -Homepage
+  else (nej)
+    -Homepage
+  endif
+endif
+
+:Log af;
+stop
+
+@enduml

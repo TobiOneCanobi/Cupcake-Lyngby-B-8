@@ -1,0 +1,45 @@
+@startuml
+skinparam backgroundColor #EEF2F3
+
+start
+:Besøg hjemmesiden;
+
+if ("Er logget ind?") then (ja)
+else (nej)
+  :Opret bruger;
+  :Log ind;
+endif
+
+:Homepage;
+
+:Design cupcake;
+:Tilføj til kurv;
+
+:Opdater kurv;
+
+:Gå til kurv;
+:Se kurv;
+
+if ("Køb cupcakes?") then (ja)
+  :Tryk 'Køb';
+  :Vis bekræftelsesside;
+
+  if ("Bestil mere?") then (ja)
+    -Homepage
+  else (nej)
+    :Log af;
+    stop
+  endif
+else (nej)
+  if ("Se tidligere ordrer?") then (ja)
+    :Vis tidligere ordrer;
+    -Homepage
+  else (nej)
+    -Homepage
+  endif
+endif
+
+:Log af;
+stop
+
+@enduml
