@@ -1,25 +1,18 @@
 package app.controllers;
 
-import app.entities.Order;
-import app.entities.ShoppingCartLine;
+
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
-import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
-import static app.controllers.CupcakeController.loadBottomsAndToppings;
-import static app.controllers.OrderController.calculateTotalPrice;
 
 public class UserController
 {
-
     public static void addRoutes(Javalin app, ConnectionPool connectionPool)
     {
         app.post("login", ctx -> login(ctx, connectionPool));
@@ -28,29 +21,11 @@ public class UserController
         app.get("createuser", ctx -> ctx.render("createuser.html"));
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
         app.get("homepage", ctx -> ctx.render("homepage.html"));
-
-        app.get("shoppingcart", ctx -> showShoppingCart(ctx, connectionPool));  // Opdater ruten til at kalde en metode
-
-//        app.get("shoppingcart", ctx -> ctx.render("shoppingcart.html"));
         app.get("confirmation", ctx -> ctx.render("confirmation.html"));
-        app.get("/loadcupcakes", ctx -> loadBottomsAndToppings(ctx, connectionPool));
+        app.get("/loadcupcakes", ctx -> CupcakeController.loadBottomsAndToppings(ctx, connectionPool));
         app.get("usersaldo", ctx -> loadUserSaldo(ctx, connectionPool));
     }
 
-    // Denne metode kan kaldes, når indkøbskurvsiden skal vises
-    public static void showShoppingCart(Context ctx, ConnectionPool connectionPool) {
-        List<ShoppingCartLine> shoppingCartLines = ctx.sessionAttribute("ShoppingCartLineList");
-
-        if (shoppingCartLines == null) {
-            shoppingCartLines = new ArrayList<>();
-        }
-
-        int totalPrice = calculateTotalPrice(ctx);
-
-        ctx.attribute("ShoppingCartLineList", shoppingCartLines);
-        ctx.attribute("totalPrice", totalPrice); // Tilføj den samlede pris til attributterne, der sendes til skabelonen
-        ctx.render("shoppingcart.html");
-    }
 
     private static void loadUserSaldo(Context ctx, ConnectionPool connectionPool)
     {
@@ -111,8 +86,7 @@ public class UserController
         {
             ctx.attribute("message", "Dine to passwords matcher ikke! Prøv igen");
             ctx.render("createuser.html");
-        }
-        else if (!Pattern.matches(".*[\\p{Lu}\\p{N}æøåÆØÅ].*", password1) || password1.length() < 4)
+        } else if (!Pattern.matches(".*[\\p{Lu}\\p{N}æøåÆØÅ].*", password1) || password1.length() < 4)
         {
             ctx.attribute("message", " kan kun havde normale bogstav og tal, skal mindst være 4 bogstaver langt");
             ctx.render("createuser.html");

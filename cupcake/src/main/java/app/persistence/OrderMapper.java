@@ -1,8 +1,6 @@
 package app.persistence;
 
 import app.entities.Order;
-import app.entities.OrderLine;
-import app.entities.ShoppingCartLine;
 import app.exceptions.DatabaseException;
 
 import java.sql.*;
@@ -11,7 +9,7 @@ import java.util.List;
 
 public class OrderMapper
 {
-    public static List<Order> loadOrders(ConnectionPool connectionPool) throws DatabaseException
+    public static List<Order> loadOrdersAdmin(ConnectionPool connectionPool) throws DatabaseException
     {
         List<Order> listOfOrders = new ArrayList<>();
 
@@ -106,7 +104,7 @@ public class OrderMapper
     }
 
 
-    public static Order addOrder(int userId, ConnectionPool connectionPool) throws DatabaseException
+    public static Order createOrder(int userId, ConnectionPool connectionPool) throws DatabaseException
     {
         Order newOrder = null;
 
@@ -115,7 +113,6 @@ public class OrderMapper
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS))
         {
-
             ps.setInt(1, userId);
 
             int rowsAffected = ps.executeUpdate();
@@ -136,29 +133,6 @@ public class OrderMapper
             throw new DatabaseException("Database connection error", e.getMessage());
         }
         return newOrder;
-    }
-
-    public static int createOrder(ConnectionPool connectionPool, int userId) throws SQLException
-    {
-        String insertOrderSQL = "INSERT INTO public.orders (user_id) VALUES (?) RETURNING order_id;";
-        int orderId = -1;
-
-        try (Connection conn = connectionPool.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(insertOrderSQL))
-        {
-            pstmt.setInt(1, userId);
-
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next())
-            {
-                orderId = rs.getInt(1);
-            }
-        } catch (SQLException e)
-        {
-            e.printStackTrace();
-            throw e;
-        }
-        return orderId;
     }
 
 

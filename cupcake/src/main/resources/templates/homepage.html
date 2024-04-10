@@ -24,12 +24,12 @@
 <div class="webform center-two">
     <div class="container-alignment center">
         <div th:if="${session.userRole == 'admin'}">
-            <form th:action="@{/orderoverview}" method="get">
+            <form th:action="@{/orderoverviewadmin}" method="get">
                 <button class="text-margin" type="submit">Admin overblik</button>
             </form>
         </div>
 
-        <form th:action="@{/orderoverviewcustommer}" method="get">
+        <form th:action="@{/orderoverviewcustomer}" method="get">
             <button class="text-margin" type="submit">Kunde overblik</button>
         </form>
 

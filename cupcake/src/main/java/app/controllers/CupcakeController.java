@@ -14,12 +14,11 @@ import java.util.List;
 
 public class CupcakeController
 {
-
     public static void addRoutes(Javalin app, ConnectionPool connectionPool)
     {
         app.post("add-to-cart", ctx -> addToCart(ctx, connectionPool));
+        app.get("shoppingcart", ctx -> showShoppingCart(ctx, connectionPool));
     }
-
 
     public static void loadBottomsAndToppings(Context ctx, ConnectionPool connectionPool)
     {
@@ -27,7 +26,6 @@ public class CupcakeController
         {
             List<Bottom> bottomlist = CupCakeMapper.loadBottoms(connectionPool);
             List<Topping> toppinglist = CupCakeMapper.loadToppings(connectionPool);
-
 
             ctx.sessionAttribute("bottoms", bottomlist);
             ctx.sessionAttribute("toppings", toppinglist);
@@ -38,8 +36,9 @@ public class CupcakeController
             e.printStackTrace();
         }
     }
-    public static void addToCart (Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
+    public static void addToCart(Context ctx, ConnectionPool connectionPool) throws DatabaseException
+    {
         try
         {
             int bottomId = Integer.parseInt(ctx.formParam("bottomId"));
@@ -52,7 +51,8 @@ public class CupcakeController
             ShoppingCartLine shoppingCartLine = new ShoppingCartLine(quantity, selectedBottom, selectedTopping);
             List<ShoppingCartLine> shoppingCartLineList = ctx.sessionAttribute("ShoppingCartLineList");
 
-            if (shoppingCartLineList == null) {
+            if (shoppingCartLineList == null)
+            {
                 shoppingCartLineList = new ArrayList<>();
             }
 
@@ -60,9 +60,9 @@ public class CupcakeController
 
             ctx.sessionAttribute("ShoppingCartLineList", shoppingCartLineList);
 
-            ctx.attribute("message", "tilføjet "+ quantity + " cupcakes med bund: " + selectedBottom.getType() +
+            ctx.attribute("message", "tilføjet " + quantity + " cupcakes med bund: " + selectedBottom.getType() +
                     " og top: " + selectedTopping.getType() + " for en total price af: " + shoppingCartLine.getTotal()
-            + " kr");
+                    + " kr");
             ctx.render("homepage.html");
 
         } catch (Exception e)
@@ -70,7 +70,38 @@ public class CupcakeController
             e.printStackTrace();
             ctx.attribute("message", "An error occurred while adding to cart. Please try again.");
             ctx.render("homepage.html");
-
         }
+    }
+
+    public static void showShoppingCart(Context ctx, ConnectionPool connectionPool)
+    {
+        List<ShoppingCartLine> shoppingCartLines = ctx.sessionAttribute("ShoppingCartLineList");
+
+        if (shoppingCartLines == null)
+        {
+            shoppingCartLines = new ArrayList<>();
+        }
+
+        int totalPrice = calculateTotalPrice(ctx);
+
+        ctx.attribute("ShoppingCartLineList", shoppingCartLines);
+        ctx.attribute("totalPrice", totalPrice);
+        ctx.render("shoppingcart.html");
+    }
+
+    public static int calculateTotalPrice(Context ctx)
+    {
+        List<ShoppingCartLine> shoppingCartLines = ctx.sessionAttribute("ShoppingCartLineList");
+        if (shoppingCartLines == null)
+        {
+            return 0;
+        }
+        int totalPrice = 0;
+        for (ShoppingCartLine line : shoppingCartLines)
+        {
+            int lineTotal = line.getQuantity() * (line.getBottom().getPrice() + line.getTopping().getPrice());
+            totalPrice += lineTotal;
+        }
+        return totalPrice;
     }
 }
