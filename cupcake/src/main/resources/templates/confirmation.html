@@ -7,6 +7,7 @@
     <form th:action="@{/logout}" method="get">
         <button class="webform" type="submit" style="background: indianred; max-height: 45px;">Log af</button>
     </form>
+
     <div class="flex-container image-hover">
         <div><a href="loginpage.html" th:href="@{/}">
             <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}" width="100%"/>
@@ -18,7 +19,6 @@
 
 <div class="webform center-two">
     <div class="center-text">
-
         <h2 style="font-family: Brush Script Std; font-weight: lighter; font-size: 40px;">Tak for bestillingen</h2>
         <h3>Der er trukket <span th:text="${totalPrice}">xx</span> kroner fra din saldo.</h3>
         <h4>Vi håber du nyder din ordre. <br> På gensyn.</h4>

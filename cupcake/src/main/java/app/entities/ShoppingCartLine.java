@@ -3,11 +3,8 @@ package app.entities;
 public class ShoppingCartLine
 {
     private int quantity = 0;
-
     private Bottom bottom;
-
     private Topping topping;
-
     private int total = 0;
 
     public ShoppingCartLine(int quantity, Bottom bottom, Topping topping)
@@ -24,7 +21,7 @@ public class ShoppingCartLine
 
     public int getTotal()
     {
-        total = ((topping.getPrice()+bottom.getPrice())*quantity);
+        total = ((topping.getPrice() + bottom.getPrice()) * quantity);
         return total;
     }
 

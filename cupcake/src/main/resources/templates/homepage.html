@@ -16,9 +16,8 @@
             </a>
             </div>
         </div>
-        <a>l</a>
+        <a></a>
     </div>
-
 </head>
 <body>
 
@@ -38,8 +37,6 @@
             <img class="shoppingcart-logo-hover" src="../public/images/shoppingcartlogo.png"
                  th:src="@{/images/shoppingcartlogo.png}" width="15%"/>
         </a>
-
-
     </div>
 </div>
 
@@ -55,17 +52,18 @@
                 <select id="selectBottom" name="bottomId" onchange="updateTotalPrice()">
                     <option value="" disabled selected>Vælg en bund</option>
                     <th:block th:each="bottom : ${session.bottoms}">
-                        <option th:value="${bottom.bottomId}" th:data-price="${bottom.price}" th:text="${bottom.type} + ' - ' + ${bottom.price} + ' Kr.'"></option>
+                        <option th:value="${bottom.bottomId}" th:data-price="${bottom.price}"
+                                th:text="${bottom.type} + ' - ' + ${bottom.price} + ' Kr.'"></option>
                     </th:block>
                 </select>
 
                 <select id="selectTopping" name="toppingId" onchange="updateTotalPrice()">
                     <option value="" disabled selected>Vælg en topping</option>
                     <th:block th:each="topping : ${session.toppings}">
-                        <option th:value="${topping.toppingId}" th:data-price="${topping.price}" th:text="${topping.type} + ' - ' + ${topping.price} + ' Kr.'"></option>
+                        <option th:value="${topping.toppingId}" th:data-price="${topping.price}"
+                                th:text="${topping.type} + ' - ' + ${topping.price} + ' Kr.'"></option>
                     </th:block>
                 </select>
-
 
                 <select id="selectQuantity" name="quantity" onchange="updateTotalPrice()">
                     <option value="" type="number" disabled selected>Vælg antal</option>
@@ -79,7 +77,6 @@
                     <option value="8">8</option>
                     <option value="9">9</option>
                     <option value="10">10</option>
-
                 </select>
 
                 <div class="box center-two">
@@ -90,11 +87,7 @@
             </div>
             <button type="submit" value="shoppingcart" formaction="add-to-cart">tilføj til kurv</button>
             <div th:if="${message}" th:text="${message}"></div>
-
         </form>
-
-
-
     </div>
 </div>
 

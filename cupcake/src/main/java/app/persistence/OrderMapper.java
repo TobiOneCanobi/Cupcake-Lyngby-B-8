@@ -57,7 +57,8 @@ public class OrderMapper
         return listOfOrders;
     }
 
-    public static List<Order> loadOrdersCustomer(ConnectionPool connectionPool, int userId) throws DatabaseException {
+    public static List<Order> loadOrdersCustomer(ConnectionPool connectionPool, int userId) throws DatabaseException
+    {
         List<Order> listOfOrders = new ArrayList<>();
 
         String sql = "SELECT " +
@@ -79,12 +80,13 @@ public class OrderMapper
                 "    o.user_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
-
+             PreparedStatement ps = connection.prepareStatement(sql))
+        {
             ps.setInt(1, userId);
 
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
+            while (rs.next())
+            {
                 String toppingType = rs.getString("topping_type");
                 String bottomType = rs.getString("bottom_type");
                 int quantity = rs.getInt("quantity");
@@ -95,7 +97,8 @@ public class OrderMapper
                 Order order = new Order(toppingType, bottomType, quantity, toppingPrice, bottomPrice, totalPrice);
                 listOfOrders.add(order);
             }
-        } catch (SQLException e) {
+        } catch (SQLException e)
+        {
             e.printStackTrace();
             throw new DatabaseException("Fejl ved indlæsning af ordrer.", e.getMessage());
         }
@@ -103,66 +106,77 @@ public class OrderMapper
     }
 
 
-
-    public static Order addOrder(int userId, ConnectionPool connectionPool) throws DatabaseException {
+    public static Order addOrder(int userId, ConnectionPool connectionPool) throws DatabaseException
+    {
         Order newOrder = null;
 
         String sql = "INSERT INTO orders (user_id) VALUES (?)";
 
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS))
+        {
 
             ps.setInt(1, userId);
 
             int rowsAffected = ps.executeUpdate();
-            if (rowsAffected == 1) {
+            if (rowsAffected == 1)
+            {
                 ResultSet rs = ps.getGeneratedKeys();
-                if (rs.next()) {
+                if (rs.next())
+                {
                     int newOrderId = rs.getInt(1);
                     newOrder = new Order(newOrderId, userId);
                 }
-            } else {
+            } else
+            {
                 throw new DatabaseException("Error inserting order for user ID: " + userId);
             }
-        } catch (SQLException e) {
+        } catch (SQLException e)
+        {
             throw new DatabaseException("Database connection error", e.getMessage());
         }
         return newOrder;
     }
 
-    public static int createOrder(ConnectionPool connectionPool, int userId) throws SQLException {
+    public static int createOrder(ConnectionPool connectionPool, int userId) throws SQLException
+    {
         String insertOrderSQL = "INSERT INTO public.orders (user_id) VALUES (?) RETURNING order_id;";
         int orderId = -1;
 
         try (Connection conn = connectionPool.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(insertOrderSQL)) {
+             PreparedStatement pstmt = conn.prepareStatement(insertOrderSQL))
+        {
             pstmt.setInt(1, userId);
 
             ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
+            if (rs.next())
+            {
                 orderId = rs.getInt(1);
             }
-        } catch (SQLException e) {
+        } catch (SQLException e)
+        {
             e.printStackTrace();
             throw e;
         }
-
         return orderId;
     }
 
 
-    public static void createOrderLine(ConnectionPool connectionPool, int orderId, int bottomId, int toppingId, int quantity) throws SQLException {
+    public static void createOrderLine(ConnectionPool connectionPool, int orderId, int bottomId, int toppingId, int quantity) throws SQLException
+    {
         String insertOrderLineSQL = "INSERT INTO public.orderline (order_id, bottom_id, topping_id, quantity) VALUES (?, ?, ?, ?);";
 
         try (Connection conn = connectionPool.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(insertOrderLineSQL)) {
+             PreparedStatement pstmt = conn.prepareStatement(insertOrderLineSQL))
+        {
             pstmt.setInt(1, orderId);
             pstmt.setInt(2, bottomId);
             pstmt.setInt(3, toppingId);
             pstmt.setInt(4, quantity);
 
             pstmt.executeUpdate();
-        } catch (SQLException e) {
+        } catch (SQLException e)
+        {
             e.printStackTrace();
             throw e;
         }

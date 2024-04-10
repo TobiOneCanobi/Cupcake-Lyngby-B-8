@@ -1,7 +1,9 @@
 package app.persistence;
+
 import app.entities.Bottom;
 import app.entities.Topping;
 import app.exceptions.DatabaseException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -56,16 +58,20 @@ public class CupCakeMapper
         }
         return listOfBottoms;
     }
-    public static Bottom findBottomById(ConnectionPool connectionPool, int bottomId) throws SQLException {
+
+    public static Bottom findBottomById(ConnectionPool connectionPool, int bottomId) throws SQLException
+    {
         Bottom bottom = null;
         String sql = "SELECT bottom_id, type, price FROM public.bottom WHERE bottom_id = ?";
 
         try (Connection conn = connectionPool.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql))
+        {
             pstmt.setInt(1, bottomId);
             ResultSet rs = pstmt.executeQuery();
 
-            if (rs.next()) {
+            if (rs.next())
+            {
                 int id = rs.getInt("bottom_id");
                 String type = rs.getString("type");
                 int price = rs.getInt("price");
@@ -75,21 +81,25 @@ public class CupCakeMapper
         }
         return bottom;
     }
-    public static Topping findToppingById(ConnectionPool connectionPool, int toppingId) throws SQLException {
+
+    public static Topping findToppingById(ConnectionPool connectionPool, int toppingId) throws SQLException
+    {
         Topping topping = null;
         String sql = "SELECT topping_id, type, price FROM public.topping WHERE topping_id = ?";
 
         try (Connection conn = connectionPool.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql))
+        {
             pstmt.setInt(1, toppingId);
             ResultSet rs = pstmt.executeQuery();
 
-            if (rs.next()) {
+            if (rs.next())
+            {
                 int id = rs.getInt("topping_id");
                 String type = rs.getString("type");
                 int price = rs.getInt("price");
 
-                topping = new Topping(id,price, type);
+                topping = new Topping(id, price, type);
             }
         }
         return topping;

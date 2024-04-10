@@ -52,27 +52,28 @@ public class UserController
         ctx.render("shoppingcart.html");
     }
 
-    private static void loadUserSaldo(Context ctx, ConnectionPool connectionPool) {
-        try {
+    private static void loadUserSaldo(Context ctx, ConnectionPool connectionPool)
+    {
+        try
+        {
             User user = ctx.sessionAttribute("currentUser");
             int userId = user.getUserid();
             int balance = UserMapper.getBalance(userId, connectionPool);
 
             ctx.attribute("balance", balance);
-            ctx.render("shoppingcart.html");  // Erstat "your-template.html" med den faktiske HTML-fil, der skal vise saldoen
-        } catch (DatabaseException e) {
+            ctx.render("shoppingcart.html");
+        } catch (DatabaseException e)
+        {
             ctx.attribute("message", "Noget gik galt. Prøv evt. igen");
-            ctx.render("shoppingcart.html");  // Erstat "error-page.html" med din fejlsidetemplate
+            ctx.render("shoppingcart.html");
         }
     }
 
 
     public static void login(Context ctx, ConnectionPool connectionPool)
     {
-
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
-
         try
         {
             User user = UserMapper.login(email, password, connectionPool);
@@ -80,23 +81,20 @@ public class UserController
             {
                 ctx.sessionAttribute("currentUser", user);
                 ctx.sessionAttribute("userEmail", email);
-
                 ctx.sessionAttribute("userRole", user.getRole());
 
-                ctx.redirect("/loadcupcakes"); // Redirect to load cupcakes and then to the homepage
+                ctx.redirect("/loadcupcakes");
             } else
             {
-                // Handle login failure
-                ctx.attribute("loginError", "Invalid username or password");
+                ctx.attribute("message", "noget er gået galt");
                 ctx.render("loginpage.html");
             }
         } catch (DatabaseException e)
         {
             // Handle database error
-            ctx.attribute("loginError", "An error occurred. Please try again.");
+            ctx.attribute("message", "forkert email eller password");
             ctx.render("loginpage.html");
         }
-
     }
 
     private static void createUser(Context ctx, ConnectionPool connectionPool)
@@ -114,7 +112,6 @@ public class UserController
             ctx.attribute("message", "Dine to passwords matcher ikke! Prøv igen");
             ctx.render("createuser.html");
         }
-        //  else if (!password1.matches(".*[A-Z].*") || password1.length() < 4)
         else if (!Pattern.matches(".*[\\p{Lu}\\p{N}æøåÆØÅ].*", password1) || password1.length() < 4)
         {
             ctx.attribute("message", " kan kun havde normale bogstav og tal, skal mindst være 4 bogstaver langt");

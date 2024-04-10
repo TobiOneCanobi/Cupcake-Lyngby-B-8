@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.entities.Bottom;
+import app.entities.ShoppingCartLine;
 import app.entities.Topping;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
@@ -8,6 +9,7 @@ import app.persistence.CupCakeMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CupcakeController
@@ -15,7 +17,7 @@ public class CupcakeController
 
     public static void addRoutes(Javalin app, ConnectionPool connectionPool)
     {
-        // app.post("/order", ctx -> handleOrder(ctx, connectionPool));
+        app.post("add-to-cart", ctx -> addToCart(ctx, connectionPool));
     }
 
 
@@ -36,16 +38,39 @@ public class CupcakeController
             e.printStackTrace();
         }
     }
+    public static void addToCart (Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
+        try
+        {
+            int bottomId = Integer.parseInt(ctx.formParam("bottomId"));
+            int toppingId = Integer.parseInt(ctx.formParam("toppingId"));
+            int quantity = Integer.parseInt(ctx.formParam("quantity"));
 
+            Bottom selectedBottom = CupCakeMapper.findBottomById(connectionPool, bottomId);
+            Topping selectedTopping = CupCakeMapper.findToppingById(connectionPool, toppingId);
 
-    public static void handleOrder(Context ctx, ConnectionPool connectionPool)
-    {
-        // You can process the order here
-        System.out.println("Order received");
-        // Extract form data, validate, process the order, etc.
+            ShoppingCartLine shoppingCartLine = new ShoppingCartLine(quantity, selectedBottom, selectedTopping);
+            List<ShoppingCartLine> shoppingCartLineList = ctx.sessionAttribute("ShoppingCartLineList");
 
-        // For demonstration, simply show a confirmation message
-        ctx.result("Order processed successfully");
+            if (shoppingCartLineList == null) {
+                shoppingCartLineList = new ArrayList<>();
+            }
+
+            shoppingCartLineList.add(shoppingCartLine);
+
+            ctx.sessionAttribute("ShoppingCartLineList", shoppingCartLineList);
+
+            ctx.attribute("message", "tilføjet "+ quantity + " cupcakes med bund: " + selectedBottom.getType() +
+                    " og top: " + selectedTopping.getType() + " for en total price af: " + shoppingCartLine.getTotal()
+            + " kr");
+            ctx.render("homepage.html");
+
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            ctx.attribute("message", "An error occurred while adding to cart. Please try again.");
+            ctx.render("homepage.html");
+
+        }
     }
 }
