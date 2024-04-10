@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/object-diagram
+
+package entities
+{
+object User
+object Order
+object OrderLine
+object ShoppingCartLine
+object Topping
+object Bottom
+}
+
+package Controllers
+{
+object CupcakeController
+object OrderController
+object UserController
+}
+
+package Mappers
+{
+object CupcakeMapper
+object OrderMapper
+object UserMapper
+}
+
+@enduml
