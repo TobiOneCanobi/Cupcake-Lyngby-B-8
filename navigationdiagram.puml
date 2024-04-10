@@ -1,0 +1,39 @@
+@startuml
+
+[*] --> loginpage : start
+state loginpage
+loginpage --> homepage : click on 'login'
+loginpage --> createuser : click on 'create'
+
+state createuser
+createuser --> loginpage : click on 'create user'
+
+state homepage
+homepage --> loginpage : click on 'log off'
+homepage --> adminoverview : click on 'admin'
+homepage --> customeroverview : click on 'customer'
+homepage --> shoppingcart : click on 'shoppingcart logo'
+homepage --> [*] : quit
+
+state adminoverview
+adminoverview --> homepage : click on 'back'
+
+state customeroverview
+customeroverview --> homepage : click on 'back'
+
+state shoppingcart
+shoppingcart --> homepage : click on 'back'
+shoppingcart --> confirmation : click on 'place order'
+
+state confirmation
+confirmation --> loginpage : click on 'log off'
+confirmation --> homepage : click on 'order more'
+confirmation --> [*] : quit
+
+state mainlogo{
+mainlogo --> loginpage
+mainlogo : all pages have a main logo
+mainlogo: which references to login page
+}
+
+@enduml
